@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arkitektur.Entity", "Arkite
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arkitektur.DataAccess", "Arkitektur.DataAccess\Arkitektur.DataAccess.csproj", "{F48D8B3E-E5EE-4444-BF09-D4FBC3364D6B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arkitektur.Business", "Arkitektur.Business\Arkitektur.Business.csproj", "{AE3A7655-B151-4EC0-9D3F-234D737C218D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arkitektur.API", "Arkitektur.API\Arkitektur.API.csproj", "{AE2705B3-9620-463D-9247-C001094CE118}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{F48D8B3E-E5EE-4444-BF09-D4FBC3364D6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F48D8B3E-E5EE-4444-BF09-D4FBC3364D6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F48D8B3E-E5EE-4444-BF09-D4FBC3364D6B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE3A7655-B151-4EC0-9D3F-234D737C218D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE3A7655-B151-4EC0-9D3F-234D737C218D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE3A7655-B151-4EC0-9D3F-234D737C218D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE3A7655-B151-4EC0-9D3F-234D737C218D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE2705B3-9620-463D-9247-C001094CE118}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE2705B3-9620-463D-9247-C001094CE118}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE2705B3-9620-463D-9247-C001094CE118}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE2705B3-9620-463D-9247-C001094CE118}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,5 +1,6 @@
 using Arkitektur.DataAccess.Context;
 using Arkitektur.DataAccess.Interceptors;
+using Arkitektur.DataAccess.Repositories.GenericRepositories;
 using Arkitektur.DataAccess.UOW;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -10,7 +11,7 @@ namespace Arkitektur.DataAccess.Extensions
     public static class RepositoryRegistrations
     {
 
-        public static void AddRepositoriesExt(this IServiceCollection services,IConfiguration configuration)
+        public static IServiceCollection AddRepositoriesExt(this IServiceCollection services,IConfiguration configuration)
         {
 
             services.AddDbContext<AppDbContext>(options =>
@@ -23,7 +24,9 @@ namespace Arkitektur.DataAccess.Extensions
 
             services.AddScoped<IUnitOfWork,UnitOfWork>();
 
+            services.AddScoped(typeof(IGenericRepository<>),typeof(GenericRepository<>));
 
+            return services;
         }
 
 
