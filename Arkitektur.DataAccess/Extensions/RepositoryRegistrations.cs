@@ -1,5 +1,6 @@
 using Arkitektur.DataAccess.Context;
 using Arkitektur.DataAccess.Interceptors;
+using Arkitektur.DataAccess.Repositories.AppointmentRepoistories;
 using Arkitektur.DataAccess.Repositories.GenericRepositories;
 using Arkitektur.DataAccess.UOW;
 using Microsoft.EntityFrameworkCore;
@@ -25,6 +26,8 @@ namespace Arkitektur.DataAccess.Extensions
             services.AddScoped<IUnitOfWork,UnitOfWork>();
 
             services.AddScoped(typeof(IGenericRepository<>),typeof(GenericRepository<>));
+
+            services.AddScoped<IAppointmentRepository, AppointmentRepository>();
 
             return services;
         }

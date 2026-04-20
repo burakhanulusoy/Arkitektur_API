@@ -9,11 +9,6 @@ namespace Arkitektur.API.Controllers
     [ApiController]
     public class AboutsController(IAboutService _aboutService) : ControllerBase
     {
-
-
-
-
-
         // unutma boyle action resılt kullanıca neler gırılecegı goızkuyor !!!!!!!!!!!!!!!!!!!!!11
 
 

@@ -1,6 +1,9 @@
 using Arkitektur.Business.Services.AboutServices;
+using Arkitektur.Business.Services.AppointmentServices;
+using FluentValidation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 namespace Arkitektur.Business.Extensions
 {
@@ -11,6 +14,13 @@ namespace Arkitektur.Business.Extensions
         {
 
             services.AddScoped<IAboutService,AboutService>();
+            services.AddScoped<IAppointmentService,AppointmentService>();
+
+           // services.AddValidatorsFromAssembly(typeof(CreateAppointmentValidator).Assembly);
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
+
+
 
             return services;
 
