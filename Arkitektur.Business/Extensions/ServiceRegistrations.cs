@@ -1,3 +1,5 @@
+using Amazon.Runtime;
+using Amazon.S3;
 using Arkitektur.Business.Assemblies;
 using Arkitektur.Business.Services.AboutServices;
 using Arkitektur.Business.Services.AppointmentServices;
@@ -24,10 +26,28 @@ namespace Arkitektur.Business.Extensions
 
             );
 
+            //AWS CONNFÝGRASYONU
+
+            var awsOptions = configuration.GetAWSOptions();
+
+            awsOptions.Region = Amazon.RegionEndpoint.EUNorth1;
+
+            awsOptions.Credentials = new BasicAWSCredentials(
+                   
+                    configuration["AWS:AccessKey"],
+                    configuration["AWS:SecretKey"]
+                    
+
+
+            );
+
+            services.AddDefaultAWSOptions(awsOptions);
+
+            services.AddAWSService<IAmazonS3>();
 
 
 
-           // services.AddValidatorsFromAssembly(typeof(CreateAppointmentValidator).Assembly);
+            // services.AddValidatorsFromAssembly(typeof(CreateAppointmentValidator).Assembly);
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
 
