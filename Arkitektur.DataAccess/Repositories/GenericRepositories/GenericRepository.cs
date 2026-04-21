@@ -2,6 +2,9 @@ using Arkitektur.DataAccess.Context;
 using Arkitektur.Entity.Entities.Common;
 using Microsoft.EntityFrameworkCore;
 
+
+
+
 namespace Arkitektur.DataAccess.Repositories.GenericRepositories
 {
     public class GenericRepository<TEntity>(AppDbContext _context) : IGenericRepository<TEntity> where TEntity : BaseEntity

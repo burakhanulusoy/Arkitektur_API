@@ -1,4 +1,5 @@
-﻿using Arkitektur.Business.DTOs.CategoryDtos;
+﻿using Arkitektur.Business.Base;
+using Arkitektur.Business.DTOs.CategoryDtos;
 using Arkitektur.Business.Services.GenericServices;
 
 namespace Arkitektur.Business.Services.CategoryServices
@@ -7,7 +8,7 @@ namespace Arkitektur.Business.Services.CategoryServices
     {
 
 
-
+        Task<BaseResult<List<ResultCategoriesWithProjectsDto>>> GetCategoriesWithProjectsAsync();
 
 
 
