@@ -1,7 +1,6 @@
 using Arkitektur.DataAccess.Assemblies;
 using Arkitektur.DataAccess.Context;
 using Arkitektur.DataAccess.Interceptors;
-using Arkitektur.DataAccess.Repositories.AppointmentRepoistories;
 using Arkitektur.DataAccess.Repositories.GenericRepositories;
 using Arkitektur.DataAccess.UOW;
 using Microsoft.EntityFrameworkCore;
