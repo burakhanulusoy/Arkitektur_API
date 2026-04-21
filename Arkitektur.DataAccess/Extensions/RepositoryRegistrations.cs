@@ -1,3 +1,4 @@
+using Arkitektur.DataAccess.Assemblies;
 using Arkitektur.DataAccess.Context;
 using Arkitektur.DataAccess.Interceptors;
 using Arkitektur.DataAccess.Repositories.AppointmentRepoistories;
@@ -25,9 +26,20 @@ namespace Arkitektur.DataAccess.Extensions
 
             services.AddScoped<IUnitOfWork,UnitOfWork>();
 
-            services.AddScoped(typeof(IGenericRepository<>),typeof(GenericRepository<>));
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
-            services.AddScoped<IAppointmentRepository, AppointmentRepository>();
+
+            //SCRUTOR ÝLE AUTO REGÝSTRATÝON
+            services.Scan(options => options.FromAssemblyOf<DataAccessAssembly>()
+                    .AddClasses(x => x.Where(t => t.Name.EndsWith("Repository")))
+                    .AsImplementedInterfaces()
+                    .WithScopedLifetime()
+
+
+            );
+
+
+
 
             return services;
         }

@@ -1,3 +1,4 @@
+using Arkitektur.Business.Assemblies;
 using Arkitektur.Business.Services.AboutServices;
 using Arkitektur.Business.Services.AppointmentServices;
 using FluentValidation;
@@ -13,8 +14,18 @@ namespace Arkitektur.Business.Extensions
         public static IServiceCollection AddServiceExt(this IServiceCollection services,IConfiguration configuration)
         {
 
-            services.AddScoped<IAboutService,AboutService>();
-            services.AddScoped<IAppointmentService,AppointmentService>();
+
+            //SCRUTOR ÝLE AUTO REGÝSTRATÝON
+
+            services.Scan(options => options.FromAssemblyOf<BusinessAssembly>() //kendi assembly içinde 
+                     .AddClasses(x => x.Where(t => t.Name.EndsWith("Service")))
+                     .AsImplementedInterfaces()
+                     .WithScopedLifetime()
+
+            );
+
+
+
 
            // services.AddValidatorsFromAssembly(typeof(CreateAppointmentValidator).Assembly);
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());

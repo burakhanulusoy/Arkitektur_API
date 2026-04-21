@@ -18,6 +18,7 @@ namespace Arkitektur.DataAccess.Context
 
                 if(typeof(BaseEntity).IsAssignableFrom(entitiyType.ClrType))
                 {
+                    //wrapper yapýyoruz, yani sorgulara otomatik olarak silinmiþ olanlarý getirme filtresi ekliyoruz
                     //select * from table where IsDeleted = false olanlar gelsin sadece diyeceðiz
                     modelBuilder.Entity(entitiyType.ClrType)
                                 .HasQueryFilter(ConvertToDeleteFilter(entitiyType.ClrType));

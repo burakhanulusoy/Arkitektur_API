@@ -9,11 +9,14 @@ namespace Arkitektur.Business.Base
         public T? Data { get; set; }
         public IEnumerable<object> Errors { get; set; }
 
-        [JsonIgnore]
-        public bool IsSuccessful => Errors == null || !Errors.Any();//any deger varsa demek
+
+
 
         [JsonIgnore]
-        public bool IsFailure =>Errors !=null;
+        public bool IsSuccessful => Errors == null || !Errors.Any();//any deger varsa demek eger yani deger yoksa ve nullsa true olacak
+
+        [JsonIgnore]
+        public bool IsFailure =>Errors !=null; // errors varsa true olacak
 
 
 
@@ -22,7 +25,7 @@ namespace Arkitektur.Business.Base
             return new BaseResult<T> { Errors=null };
         }
 
-        public static BaseResult<T> Success(T data)
+        public static BaseResult<T> Success(T data)//entity döndüreceksek bu metodu kullanýrýz
         {
             return new BaseResult<T> { Data = data };
         }

@@ -18,6 +18,8 @@ namespace Arkitektur.API.Controllers
             return response.IsSuccessful ? Ok(response) : BadRequest(response);
 
         }
+
+
         //https://localhost:5001/api/appointments/1
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
