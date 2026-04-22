@@ -1,12 +1,14 @@
 ﻿using Arkitektur.Business.DTOs.AboutDtos;
 using Arkitektur.Business.Services.AboutServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace Arkitektur.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+
+ //   [Authorize(Roles ="deneme")]
     public class AboutsController(IAboutService _aboutService) : ControllerBase
     {
         // unutma boyle action resılt kullanıca neler gırılecegı goızkuyor !!!!!!!!!!!!!!!!!!!!!11

@@ -1,12 +1,13 @@
 ﻿using Arkitektur.Business.DTOs.UserIdentityDtos;
 using Arkitektur.Business.Services.UserİdentityServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace Arkitektur.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [AllowAnonymous]
     public class UsersController(IUserService _userService) : ControllerBase
     {
         [HttpPost("register")]
@@ -18,7 +19,16 @@ namespace Arkitektur.API.Controllers
 
         }
 
+        [HttpPost("login")]
+        public async Task<IActionResult> LoginUser(LoginUserDto loginUserDto)
+        {
 
+            var response = await _userService.LoginUserAsync(loginUserDto);
+
+            return response.IsSuccessful ? Ok(response) :BadRequest(response);
+
+
+        }
 
 
 

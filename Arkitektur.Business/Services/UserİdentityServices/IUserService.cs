@@ -1,4 +1,5 @@
 ﻿using Arkitektur.Business.Base;
+using Arkitektur.Business.DTOs.JwtTokenDtos;
 using Arkitektur.Business.DTOs.UserIdentityDtos;
 
 namespace Arkitektur.Business.Services.UserİdentityServices
@@ -7,6 +8,8 @@ namespace Arkitektur.Business.Services.UserİdentityServices
     {
 
         Task<BaseResult<object>> CreateUserAsync(CreateUserDto createUserDto);
+
+        Task<BaseResult<TokenResponseDto>> LoginUserAsync(LoginUserDto loginUserDto);
 
     }
 }

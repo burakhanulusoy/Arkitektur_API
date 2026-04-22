@@ -1,5 +1,7 @@
 using Arkitektur.Business.Extensions;
 using Arkitektur.DataAccess.Extensions;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,7 +15,14 @@ builder.Services.AddRepositoriesExt(builder.Configuration)
 
 
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options=>
+{
+
+    var adminPolicy = new AuthorizationPolicyBuilder().RequireRole("Admin").Build();//admin her yere eriþebilir
+
+    options.Filters.Add(new AuthorizeFilter(adminPolicy));
+
+});
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
@@ -28,6 +37,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

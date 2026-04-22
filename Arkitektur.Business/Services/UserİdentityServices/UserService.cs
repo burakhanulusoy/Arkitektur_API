@@ -1,5 +1,7 @@
 ﻿using Arkitektur.Business.Base;
+using Arkitektur.Business.DTOs.JwtTokenDtos;
 using Arkitektur.Business.DTOs.UserIdentityDtos;
+using Arkitektur.Business.Services.JWTServices;
 using Arkitektur.Entity.Entities;
 using FluentValidation;
 using Mapster;
@@ -9,7 +11,10 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Arkitektur.Business.Services.UserİdentityServices
 {
-    public class UserService(UserManager<AppUser> _userManager ,IValidator<CreateUserDto> _validator) : IUserService
+    public class UserService(UserManager<AppUser> _userManager
+                            ,IValidator<CreateUserDto> _validator
+                            ,SignInManager<AppUser> _signInManager
+                            ,IJwtService _jwtService) : IUserService
     {
         public async Task<BaseResult<object>> CreateUserAsync(CreateUserDto createUserDto)
         {
@@ -42,6 +47,32 @@ namespace Arkitektur.Business.Services.UserİdentityServices
             }
 
             return BaseResult<object>.Success(new {Message ="User Created Success"});
+
+
+
+
+        }
+
+        public async Task<BaseResult<TokenResponseDto>> LoginUserAsync(LoginUserDto loginUserDto)
+        {
+            var user = await _userManager.FindByEmailAsync(loginUserDto.Email);
+
+            if (user is null)
+            {
+                return BaseResult<TokenResponseDto>.Fail("User Not Found");
+            }
+
+            var result = await _signInManager.PasswordSignInAsync(user, loginUserDto.Password, true, true);
+
+            if (!result.Succeeded)
+            {
+                return BaseResult<TokenResponseDto>.Fail("Password or email is incorrect");
+            }
+
+            var tokenResponse = await _jwtService.GenerateTokenAsync(user);
+
+            return BaseResult<TokenResponseDto>.Success(tokenResponse);
+
 
 
 
