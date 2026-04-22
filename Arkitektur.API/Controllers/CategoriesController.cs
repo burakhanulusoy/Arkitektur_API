@@ -40,7 +40,7 @@ namespace Arkitektur.API.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var response = await _categoryService.DeleteAsync(id);
-            return response.IsSuccessful ? NoContent() : BadRequest(response);
+            return response.IsSuccessful ? Ok(response) : BadRequest(response);
 
         }
 
@@ -55,7 +55,7 @@ namespace Arkitektur.API.Controllers
         public async Task<IActionResult> Update(UpdateCategoryDto updateDto)
         {
             var response = await _categoryService.UpdateAsync(updateDto);
-            return response.IsSuccessful ? NoContent() : BadRequest(response);
+            return response.IsSuccessful ? Ok(response) : BadRequest(response);
         }
 
 

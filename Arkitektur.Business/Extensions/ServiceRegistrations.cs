@@ -55,6 +55,8 @@ namespace Arkitektur.Business.Extensions
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
 
+            //************************
+
             //JWT Configrasyonlarý
 
             var tokenOptions = configuration.GetSection(nameof(JwtTokenOptions)).Get<JwtTokenOptions>();
@@ -87,7 +89,7 @@ namespace Arkitektur.Business.Extensions
 
             });
 
-
+            //****************************************
 
             return services;
 

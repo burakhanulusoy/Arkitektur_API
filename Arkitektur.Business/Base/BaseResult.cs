@@ -13,10 +13,8 @@ namespace Arkitektur.Business.Base
 
 
 
-        [JsonIgnore]
         public bool IsSuccessful => Errors == null || !Errors.Any();//any deger varsa demek eger yani deger yoksa ve nullsa true olacak
 
-        [JsonIgnore]
         public bool IsFailure =>Errors !=null; // errors varsa true olacak
 
 
