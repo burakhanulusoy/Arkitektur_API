@@ -26,10 +26,12 @@
             <td>@item.CategoryName</td>
             <td>@item.CreatedAt.ToString("dd MMMM dddd")</td>
             <td>
-
-                <a href="/Admin/Category/UpdateCategory/@item.Id" class="btn btn-primary">Düzenle</a>
-                <a href="/Admin/Category/DeleteCategory/@item.Id" class="btn btn-danger">Sil</a>
-
+                <a href="/Admin/Category/UpdateCategory/@item.Id" class="btn btn-primary">
+                    <i class="bi bi-pencil-square me-1"></i> Düzenle
+                </a>
+                <button onclick="deleteCategory(@item.Id)" class="btn btn-danger">
+                    <i class="bi bi-trash me-1"></i> Sil
+                </button>
             </td>
         </tr>
     }
@@ -40,7 +42,10 @@
 
 </table>
 
-<a href="/Admin/Category/CreateCategory" class="btn btn-success">Yeni Kategori Ekle</a>
+
+<a href="/Admin/Category/CreateCategory" class="btn btn-success">
+    <i class="bi bi-plus-circle me-1"></i> Yeni Kategori Ekle
+</a>
 
 
 
@@ -59,12 +64,15 @@
     }).then((result) => {
       if (result.isConfirmed){
 
-          window.location.href="/Admin/Category/DeleteCategory/"+id;
-           Swal.fire({
+             Swal.fire({
         title: "Silindi!",
         text: "Öğeniz başarılı bir şekilde silindi.",
         icon: "success"
       });
+
+
+          window.location.href="/Admin/Category/DeleteCategory/"+id;
+        
 
 
       } 

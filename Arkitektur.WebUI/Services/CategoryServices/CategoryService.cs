@@ -21,7 +21,7 @@ namespace Arkitektur.WebUI.Services.CategoryServices
         {
 
             var response = await _client.DeleteAsync("categories/" + id);
-
+            await Task.Delay(2000);//2 samiye
 
             //deserialaze
             return await response.Content.ReadFromJsonAsync<BaseResult<object>>();
