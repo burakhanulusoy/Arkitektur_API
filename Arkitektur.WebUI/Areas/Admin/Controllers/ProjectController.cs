@@ -1,7 +1,9 @@
 ﻿using Arkitektur.WebUI.DTOs.ProjectDtos;
+using Arkitektur.WebUI.Exceptions;
 using Arkitektur.WebUI.Services.CategoryServices;
 using Arkitektur.WebUI.Services.ProjectServices;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Threading.Tasks;
 
@@ -10,6 +12,37 @@ namespace Arkitektur.WebUI.Areas.Admin.Controllers
     [Area("Admin")]
     public class ProjectController(IProjectService _projectService,ICategoryService _categoryService) : Controller
     {
+
+        //bu metot hem postta hem gette hep calişir
+        public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+        {
+
+            var actionName = context.RouteData.Values["action"]?.ToString();
+
+            // Sadece bu sayfalarda kategorilere ihtiyacım var!
+            if (actionName.Contains("Create") || actionName.Contains("Update"))
+            {
+                await GetCategoriesAsync();
+            }
+
+            // 2. Action'ı çalıştır (Yani CreateProject veya UpdateProject içine girer)
+            var executedContext = await next();
+
+            // 3. EĞER servis 'throw' fırlatmışsa burası yakalar!
+            if (executedContext.Exception is ApiValidationException ex)
+            {
+                // Hataları ekrana bas
+                foreach (var error in ex.Errors)
+                    ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+
+                // Kullanıcıyı geldiği sayfaya, yazdığı verilerle (Model) geri gönder
+                executedContext.Result = View(context.RouteData.Values["action"].ToString(), context.ActionArguments.Values.FirstOrDefault());
+
+                // "Hatayı ben hallettim, sistemi çökertme" diyoruz
+                executedContext.ExceptionHandled = true;
+            }
+        }
+
         public async Task<IActionResult> Index()
         {
 
