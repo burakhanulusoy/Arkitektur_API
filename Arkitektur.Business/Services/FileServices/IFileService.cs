@@ -7,7 +7,7 @@ namespace Arkitektur.Business.Services.FileServices
     {
         Task<BaseResult<object>> UploadImageToS3Async(IFormFile? file); // RESİM BOŞ TA GONDERELEBİİİR ONUN İÇİN NULLABLE YAPILDI
 
-
+        Task<BaseResult<object>> DeleteFileAsync(string imageUrl);
 
     }
 }

@@ -3,6 +3,7 @@ using Amazon.S3.Model;
 using Arkitektur.Business.Base;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using System.Net;
 
 namespace Arkitektur.Business.Services.FileServices
 {
@@ -10,6 +11,33 @@ namespace Arkitektur.Business.Services.FileServices
     {
 
         private readonly string _bucketName = _configuration["AWS:BucketName"];
+
+        public async Task<BaseResult<object>> DeleteFileAsync(string imageUrl)
+        {
+
+            var uri = new Uri(imageUrl);
+
+            var fileKey = uri.AbsolutePath.TrimStart('/');
+
+            var request = new DeleteObjectRequest
+            {
+                BucketName = _bucketName,
+                Key = fileKey
+
+            };
+
+
+            var response = await _s3Client.DeleteObjectAsync(request);
+
+            if(response.HttpStatusCode ==HttpStatusCode.NoContent)
+            {
+                //204
+                return BaseResult<object>.Success();
+
+            }
+            return BaseResult<object>.Fail("Deleted Fail");
+
+        }
 
         public async Task<BaseResult<object>> UploadImageToS3Async(IFormFile? file)
         {

@@ -1,14 +1,32 @@
-﻿@model CreateProjectDto
-
+﻿@model UpdateProjectDto
 @{
-    ViewData["Title"] = "CreateProject";
+    ViewData["Title"] = "UpdateProject";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+   
+
 }
-@*!!!!!!!!!!!!!!!! içinde dosya gönderdiğim için multipart form data unutma !!!!!!!!!!!!!!!! *@
 
-<form method="post"  enctype="multipart/form-data">
 
-    <div class="form-group" >
+
+<form method="post" enctype="multipart/form-data">
+
+
+    <input asp-for="Id" type="hidden" />
+
+    @* bu yok createde *@
+
+    <input asp-for="ImageUrl" type="hidden" />
+
+
+
+    <div class="form-group">
+        <label>Proje Görseli</label>
+        <img alt="proje görseli" src="@Model.ImageUrl" style="width:125px;height:125px;" />
+    </div>
+
+   
+    <div class="form-group">
         <label>*Proje Başlığı</label>
         <input asp-for="Title" class="form-control" placeholder="Proje Başlığını Giriniz..." type="text" />
         <span asp-validation-for="Title" class="text-danger"></span>
@@ -21,9 +39,9 @@
     </div>
 
     <div class="form-group">
-        <label>*Proje kategorisini seçiniz</label>
+        <label>*Proje kategorisiniz seçiniz</label>
         <select asp-items="@ViewBag.categories" asp-for="CategoryId" class="form-control" required>
-            <option value="" disabled selected>Kategori Seçiniz</option>
+            <option disabled selected>Kategori Seçiniz</option>
         </select>
         <span asp-validation-for="CategoryId" class="text-danger"></span>
     </div>
@@ -48,23 +66,18 @@
     </div>
 
     <div class="form-group">
-        <label>*Proje Görselini Yükleyin</label>
+        <label>*Proje Görselini Değiştirmek İçin Görsel Seçiniz</label>
         <input asp-for="file" class="form-control" placeholder="Proje Öğesini Giriniz..." type="file" />
         <span asp-validation-for="file" class="text-danger"></span>
     </div>
 
-  
 
 
-    
-    <button class="btn btn-success">Kaydet</button>
+
+
+    <button class="btn btn-primary">Güncelle</button>
 
 </form>
-
-
-
-
-
 
 
 

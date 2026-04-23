@@ -1,5 +1,6 @@
 ﻿using Arkitektur.Business.Services.FileServices;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace Arkitektur.API.Controllers
 {
@@ -18,5 +19,19 @@ namespace Arkitektur.API.Controllers
 
 
         }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteFile([FromQuery]string imageUrl)
+        {
+
+            var response = await _fileService.DeleteFileAsync(imageUrl);
+
+            return response.IsSuccessful ? Ok(response) : BadRequest(response);
+
+
+        }
+
+
+
     }
 }

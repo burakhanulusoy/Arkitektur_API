@@ -13,7 +13,7 @@
     "https": {
       "commandName": "Project",
       "dotnetRunMessages": true,
-      "launchBrowser": false, //******************************************************* sclar acılsın acılmasın
+      "launchBrowser": true, //******************************************************* sclar acılsın acılmasın
       "launchUrl": "scalar",
       "applicationUrl": "https://localhost:7018;http://localhost:5289",
       "environmentVariables": {

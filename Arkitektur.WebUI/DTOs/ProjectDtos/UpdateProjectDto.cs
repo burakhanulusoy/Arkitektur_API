@@ -10,6 +10,6 @@
         public string? Item1 { get; set; }
         public string? Item2 { get; set; }
         public string? Item3 { get; set; }
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
     }
 }

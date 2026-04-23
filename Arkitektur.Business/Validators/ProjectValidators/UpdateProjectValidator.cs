@@ -12,9 +12,7 @@ namespace Arkitektur.Business.Validators.ProjectValidators
                 .MinimumLength(3).WithMessage("Proje baþlýðý en az 3 karakter olmalýdýr.")
                 .MaximumLength(100).WithMessage("Proje baþlýðý en fazla 100 karakter olabilir.");
 
-            RuleFor(x => x.ImageUrl)
-                .NotEmpty().WithMessage("Görsel yolu (URL) boþ býrakýlamaz.");
-
+           
             RuleFor(x => x.Description)
                 .NotEmpty().WithMessage("Proje açýklamasý boþ býrakýlamaz.")
                 .MinimumLength(10).WithMessage("Proje açýklamasý en az 10 karakter olmalýdýr.")

@@ -19,9 +19,17 @@ namespace Arkitektur.WebUI.Areas.Admin.Controllers
 
         private async Task GetCategoriesAsync()
         {
-            var categories = await _categoryService.GetAllAsync();
+            var result = await _categoryService.GetAllAsync();
 
-           
+            var categories = result.Data;
+
+            ViewBag.categories = (from category in categories
+                                  select new SelectListItem
+                                  {
+                                      Text = category.CategoryName,
+                                      Value = category.Id.ToString()
+
+                                  }).ToList();
 
 
         }
@@ -29,14 +37,16 @@ namespace Arkitektur.WebUI.Areas.Admin.Controllers
 
 
 
-        public IActionResult CreateProject()
+        public async Task<IActionResult> CreateProject()
         {
+            await GetCategoriesAsync();
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateProject(CreateProjectDto procejtDto)
         {
+            await GetCategoriesAsync(); //create işleminde hata alırısma diye koymak zorundayım
 
             await _projectService.CreateProjectAsync(procejtDto);
 
@@ -54,6 +64,8 @@ namespace Arkitektur.WebUI.Areas.Admin.Controllers
 
         public async Task<IActionResult> UpdateProject(int id)
         {
+            await GetCategoriesAsync();
+
             var project = await _projectService.GetByIdProjectAsync(id);
 
             return View(project.Data);
@@ -62,8 +74,10 @@ namespace Arkitektur.WebUI.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateProject(UpdateProjectDto procejtDto)
         {
+            await GetCategoriesAsync();
 
             await _projectService.UpdateProjectAsync(procejtDto);
+           
             return RedirectToAction(nameof(Index));
         }
 

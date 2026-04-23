@@ -28,11 +28,13 @@ namespace Arkitektur.WebUI.Services.ProjectServices
         public async Task<BaseResult<object>> DeleteProjectAsync(int id)
         {
 
+            //Eğer proje silinirse resimi de silinsin 
+            var project = await _httpClient.GetFromJsonAsync<BaseResult<ResultProjectDto>>($"projects/{id}");
+            await _fileService.DeleteFileAsync(project.Data.ImageUrl);
+
             var response = await _httpClient.DeleteAsync($"projects/{id}");
 
             return await response.Content.ReadFromJsonAsync<BaseResult<object>>();
-
-
         }
 
         public async Task<BaseResult<List<ResultProjectDto>>> GetAllProjectsWithCategoryAsync()
@@ -52,6 +54,9 @@ namespace Arkitektur.WebUI.Services.ProjectServices
         {
             if(updateProcejtDto.file is not null) //çünkü belki resimi aynı kalmasını ısteyecek
             {
+                await _fileService.DeleteFileAsync(updateProcejtDto.ImageUrl);//yeni resim gelirse eski resimi silcez oke
+
+
                 //AMAZON SE BUCKET AYARI RESIM YUKLEMEDE ******************************************************************
                 var imageResponse = await _fileService.UploadFileAsync(updateProcejtDto.file);
                 updateProcejtDto.ImageUrl = imageResponse.Data.ImageUrl;

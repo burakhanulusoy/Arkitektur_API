@@ -1,12 +1,23 @@
-﻿using Arkitektur.WebUI.Base;
+﻿using Amazon.S3.Model;
+using Arkitektur.WebUI.Base;
 using Arkitektur.WebUI.DTOs.FileDtos;
 using Arkitektur.WebUI.Exceptions;
 using System.Net.Http.Headers;
 
 namespace Arkitektur.WebUI.Services.FileServices
 {
-    public class FileService(HttpClient _client) : IFileService
+    public class FileService(HttpClient _client , IConfiguration _configuration) : IFileService
     {
+        public async Task<BaseResult<object>> DeleteFileAsync(string imageUrl)
+        {
+
+
+            var response = await _client.DeleteAsync($"files?imageUrl={imageUrl}");
+
+            return new BaseResult<object>() { IsSuccessful=true , IsFailure=false};
+
+        }
+
         public async Task<BaseResult<ResultFileDto>> UploadFileAsync(IFormFile file)
         {
             if(file is null || file.Length<=0)
