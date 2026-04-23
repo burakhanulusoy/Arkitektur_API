@@ -1,5 +1,6 @@
 ﻿using Arkitektur.WebUI.Options;
 using Arkitektur.WebUI.Services.CategoryServices;
+using Arkitektur.WebUI.Services.FileServices;
 using Arkitektur.WebUI.Services.ProjectServices;
 
 namespace Arkitektur.WebUI.Extensions
@@ -24,6 +25,11 @@ namespace Arkitektur.WebUI.Extensions
 
             });
 
+            services.AddHttpClient<IFileService, FileService>(options =>
+            {
+                options.BaseAddress = new Uri(apiOptions.baseUrl);
+
+            });
 
 
 

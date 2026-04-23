@@ -1,13 +1,19 @@
 ﻿using Arkitektur.WebUI.Base;
 using Arkitektur.WebUI.DTOs.ProjectDtos;
 using Arkitektur.WebUI.Exceptions;
+using Arkitektur.WebUI.Services.FileServices;
 
 namespace Arkitektur.WebUI.Services.ProjectServices
 {
-    public class ProjectService(HttpClient _httpClient) : IProjectService
+    public class ProjectService(HttpClient _httpClient,IFileService _fileService) : IProjectService
     {
         public async Task<BaseResult<object>> CreateProjectAsync(CreateProjectDto createProcejtDto)
         {
+
+
+            //AMAZON SE BUCKET AYARI RESIM YUKLEMEDE ******************************************************************
+            var imageResponse = await _fileService.UploadFileAsync(createProcejtDto.file);
+            createProcejtDto.ImageUrl = imageResponse.Data.ImageUrl;
 
             //serialize yaptık c# ı json yaptık yani
             var response = await _httpClient.PostAsJsonAsync("projects", createProcejtDto);
@@ -44,6 +50,16 @@ namespace Arkitektur.WebUI.Services.ProjectServices
 
         public async Task<BaseResult<object>> UpdateProjectAsync(UpdateProjectDto updateProcejtDto)
         {
+            if(updateProcejtDto.file is not null) //çünkü belki resimi aynı kalmasını ısteyecek
+            {
+                //AMAZON SE BUCKET AYARI RESIM YUKLEMEDE ******************************************************************
+                var imageResponse = await _fileService.UploadFileAsync(updateProcejtDto.file);
+                updateProcejtDto.ImageUrl = imageResponse.Data.ImageUrl;
+
+
+            }
+
+           
 
             var response = await _httpClient.PutAsJsonAsync("projects", updateProcejtDto);
 
