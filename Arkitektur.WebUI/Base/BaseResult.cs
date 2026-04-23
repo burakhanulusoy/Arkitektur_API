@@ -1,8 +1,4 @@
-﻿using FluentValidation.Results;
-using Microsoft.AspNetCore.Identity;
-using System.Text.Json.Serialization;
-
-namespace Arkitektur.WebUI.Base
+﻿namespace Arkitektur.WebUI.Base
 {
     public class BaseResult<T>
     {
@@ -14,14 +10,16 @@ namespace Arkitektur.WebUI.Base
         public bool IsSuccessful { get; set; }
         public bool IsFailure { get; set; }
 
-        public class Error
-        {
-            public string PropertyName { get; set; }
-            public string ErrorMessage { get; set; }
+    }
 
-
-        }
+    public class Error
+    {
+        public string PropertyName { get; set; }
+        public string ErrorMessage { get; set; }
 
 
     }
+
+
+
 }

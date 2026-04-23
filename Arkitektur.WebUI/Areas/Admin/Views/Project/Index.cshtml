@@ -1,0 +1,93 @@
+﻿@model List<ResultProjectDto>
+
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    int count = 0;
+}
+
+<table class="table table-bordered table-hover">
+
+
+    <tr>
+        <td>#</td>
+        <td>Başlık</td>
+        <td>Açıklama</td>
+        <td>Öğeler</td>
+        <td>Kategori Adı</td>
+        <td>Oluşturulma Tarihi</td>
+        <td>İşlemler</td>
+    </tr>
+
+    @foreach(var project in Model)
+    {
+        count++;
+        <tr>
+            <td>
+                @count
+                <img src="@project.ImageUrl" style="width:75px;height:75px" />  
+            </td>
+            <td>@project.Title</td>
+            <td>@project.Description</td>
+            <td>
+                <ul>
+                    <li>@project.Item1</li>
+                    <li>@project.Item2</li>
+                    <li>@project.Item3</li>
+                </ul>
+            </td>
+            <td>@project.Category.CategoryName</td>
+            <td>@project.CreatedAt.ToString("dd yyyy dddd")</td>
+            <td>
+                <a href="/Admin/Project/UpdateProject/@project.Id" class="btn btn-primary">
+                    <i class="bi bi-pencil-square me-1"></i> Düzenle
+                </a>
+                <button onclick="deleteProject(@project.Id)" class="btn btn-danger">
+                    <i class="bi bi-trash me-1"></i> Sil
+                </button>
+            </td>
+        </tr>
+
+    }
+</table>
+
+<a class="btn btn-success" href="/Admin/Project/CreateProject"> <i class="bi bi-plus-circle me-1"></i> Yeni Proje Ekle</a>
+            
+<script>
+
+    function deleteProject(id){
+            Swal.fire({
+      title: "Silmek istediğinize emin misiniz ?",
+      text: "Bu işlemi geri alamazsınız!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Evet, sil!",
+      cancelButtonText:"İptal"
+    }).then((result) => {
+      if (result.isConfirmed){
+
+             Swal.fire({
+        title: "Silindi!",
+        text: "Öğeniz başarılı bir şekilde silindi.",
+        icon: "success"
+      });
+
+
+          window.location.href="/Admin/Project/DeleteProject/"+id;
+        
+
+
+      } 
+     
+    });
+    }
+
+</script>
+
+
+
+
+

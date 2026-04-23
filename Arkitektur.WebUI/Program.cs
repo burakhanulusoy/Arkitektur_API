@@ -1,13 +1,23 @@
 using Arkitektur.WebUI.Extensions;
+using Arkitektur.WebUI.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+
+
 builder.Services.AddHttpClientService(builder.Configuration);
 
+builder.Services.AddServiceRegistrations(builder.Configuration);
 
-builder.Services.AddControllersWithViews();
+
+builder.Services.AddControllersWithViews(options =>
+{
+    //tüm contrllera entegre ediyorum
+    options.Filters.Add<ValidationExceptionFilter>();
+
+});
 
 var app = builder.Build();
 

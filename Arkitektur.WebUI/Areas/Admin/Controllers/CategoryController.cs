@@ -1,7 +1,6 @@
 ﻿using Arkitektur.WebUI.DTOs.CategoryDtos;
 using Arkitektur.WebUI.Services.CategoryServices;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace Arkitektur.WebUI.Areas.Admin.Controllers
 {
@@ -24,20 +23,11 @@ namespace Arkitektur.WebUI.Areas.Admin.Controllers
             return View();
         }
 
+        
         [HttpPost]
         public async Task<IActionResult> CreateCategory(CreateCategoryDto createCategoryDto)
         {
-            var response = await _categoryService.CreateAsync(createCategoryDto);
-
-            if(response.IsFailure)
-            {
-                foreach(var error in response.Errors)
-                {
-                    ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-                }
-                return View(createCategoryDto);
-
-            }
+            await _categoryService.CreateAsync(createCategoryDto);
 
             return RedirectToAction(nameof(Index));
 
@@ -60,19 +50,7 @@ namespace Arkitektur.WebUI.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateCategory(UpdateCategoryDto updateCategoryDto)
         {
-            var response = await _categoryService.UpdateAsync(updateCategoryDto);
-
-            if(response.IsFailure)
-            {
-
-                foreach(var error in response.Errors)
-                {
-                    ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-                }
-
-                return View(updateCategoryDto);
-            }
-
+             await _categoryService.UpdateAsync(updateCategoryDto);
 
             return RedirectToAction(nameof(Index));
 

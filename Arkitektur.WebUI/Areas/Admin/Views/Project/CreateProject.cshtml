@@ -1,0 +1,33 @@
+﻿@model CreateProjectDto
+
+
+
+@{
+    ViewData["Title"] = "CreateProject";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+
+<form method="post">
+
+    <div class="form-group">
+
+        <label>*Proje Başlığı</label>
+        <input asp-for="Title" class="form-control" placeholder="Proje Başlığını Giriniz..." />
+        <span asp-validation-for="Title" class="text-danger"></span>
+
+    </div>
+
+    
+    <button class="btn btn-success">Kaydet</button>
+
+</form>
+
+
+
+
+
+
+
+

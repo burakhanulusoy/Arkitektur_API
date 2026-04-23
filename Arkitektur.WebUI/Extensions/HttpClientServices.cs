@@ -1,0 +1,37 @@
+﻿using Arkitektur.WebUI.Options;
+using Arkitektur.WebUI.Services.CategoryServices;
+using Arkitektur.WebUI.Services.ProjectServices;
+
+namespace Arkitektur.WebUI.Extensions
+{
+    public static class HttpClientServices
+    {
+
+        public static void AddHttpClientService(this IServiceCollection services,IConfiguration configuration)
+        {
+
+            var apiOptions = configuration.GetSection(nameof(ApiOptions)).Get<ApiOptions>();
+
+            //boyle yapınca scoped life time oluyor ek olarak yapmana gerek yok
+            services.AddHttpClient<ICategoryService,CategoryService>(options=>
+            {
+                options.BaseAddress = new Uri(apiOptions.baseUrl);
+
+            });
+            services.AddHttpClient<IProjectService, ProjectService>(options =>
+            {
+                options.BaseAddress = new Uri(apiOptions.baseUrl);
+
+            });
+
+
+
+
+
+
+
+        }
+
+
+    }
+}

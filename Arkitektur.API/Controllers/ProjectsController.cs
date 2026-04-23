@@ -37,14 +37,14 @@ namespace Arkitektur.API.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var response = await _projectService.DeleteAsync(id);
-            return response.IsSuccessful ? NoContent() : BadRequest(response);
+            return response.IsSuccessful ? Ok(response) : BadRequest(response);
         }
 
         [HttpPut]
         public async Task<IActionResult> Update(UpdateProjectDto updateDto)
         {
             var response = await _projectService.UpdateAsync(updateDto);
-            return response.IsSuccessful ? NoContent() : BadRequest(response);
+            return response.IsSuccessful ? Ok(response) : BadRequest(response);
         }
 
         [HttpPost]

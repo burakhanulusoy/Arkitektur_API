@@ -1,5 +1,6 @@
 ﻿using Arkitektur.WebUI.Base;
 using Arkitektur.WebUI.DTOs.CategoryDtos;
+using Arkitektur.WebUI.Exceptions;
 
 namespace Arkitektur.WebUI.Services.CategoryServices
 {
@@ -9,19 +10,22 @@ namespace Arkitektur.WebUI.Services.CategoryServices
     {
         public async Task<BaseResult<object>> CreateAsync(CreateCategoryDto createCategoryDto)
         {
-            //serialazeişlemi yapıyor ılk c# ı jsona ceviriyor ve api ye göneriyor
+            //serialaze işlemi yapıyor ılk c# ı jsona ceviriyor ve api ye göneriyor
             var response =await _client.PostAsJsonAsync("categories", createCategoryDto); 
 
             //apiden gelen jsonu  deserialaze ile jsondan c# a donturup cevapı donduruyorsun
-            return await response.Content.ReadFromJsonAsync<BaseResult<object>>();
-                       
+            var result = await response.Content.ReadFromJsonAsync<BaseResult<object>>();
+
+            return result.IsSuccessful ? result : throw new ApiValidationException(result.Errors); //turniri if sorgusu
+
         }
 
         public async Task<BaseResult<object>> DeleteAsync(int id)
         {
 
             var response = await _client.DeleteAsync("categories/" + id);
-            await Task.Delay(2000);//2 samiye
+
+            await Task.Delay(2000);//2 saniye beklesin sweet alertimiz
 
             //deserialaze
             return await response.Content.ReadFromJsonAsync<BaseResult<object>>();
@@ -48,7 +52,10 @@ namespace Arkitektur.WebUI.Services.CategoryServices
                                              
             var response = await _client.PutAsJsonAsync("categories", updateCategoryDto);    
 
-            return await response.Content.ReadFromJsonAsync<BaseResult<object>>();
+            var result = await response.Content.ReadFromJsonAsync<BaseResult<object>>();
+
+            return result.IsFailure ? throw new ApiValidationException(result.Errors) : result;
+
         }
     }
 }
