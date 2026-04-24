@@ -13,6 +13,13 @@ namespace Arkitektur.WebUI.Services.ProjectServices
 
             //AMAZON SE BUCKET AYARI RESIM YUKLEMEDE ******************************************************************
             var imageResponse = await _fileService.UploadFileAsync(createProcejtDto.file);
+
+
+            if (imageResponse.IsFailure)
+            {
+                throw new ApiValidationException(imageResponse.Errors);
+            }
+
             createProcejtDto.ImageUrl = imageResponse.Data.ImageUrl;
 
             //serialize yaptık c# ı json yaptık yani

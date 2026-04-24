@@ -48,7 +48,7 @@ namespace Arkitektur.API.Controllers
         {
             var response = await _aboutService.DeleteAboutAsync(id);
 
-            return response.IsSuccessful ? NoContent() : BadRequest(response);
+            return response.IsSuccessful ? Ok(response) : BadRequest(response);
 
 
         }
@@ -57,7 +57,7 @@ namespace Arkitektur.API.Controllers
         public async Task<IActionResult> Update(UpdateAboutDto updateAboutDto)
         {
             var response = await _aboutService.UpdateAboutAsync(updateAboutDto);
-            return response.IsSuccessful ? NoContent() : BadRequest(response);
+            return response.IsSuccessful ? Ok(response) : BadRequest(response);
         }
 
 

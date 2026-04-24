@@ -3,15 +3,27 @@ using Arkitektur.Business.DTOs.AboutDtos;
 using Arkitektur.DataAccess.Repositories.GenericRepositories;
 using Arkitektur.DataAccess.UOW;
 using Arkitektur.Entity.Entities;
+using FluentValidation;
 using Mapster;
 
 namespace Arkitektur.Business.Services.AboutServices
 {
-    public class AboutService(IGenericRepository<About> _aboutRepository, IUnitOfWork _unitOfWork) : IAboutService
+    public class AboutService(IGenericRepository<About> _aboutRepository
+                             , IUnitOfWork _unitOfWork
+                             ,IValidator<UpdateAboutDto> _updateValidator
+                             ,IValidator<CreateAboutDto> _createValidator) : IAboutService
     {
         public async Task<BaseResult<object>> CreateAboutAsync(CreateAboutDto createAboutDto)
         {
             var about = createAboutDto.Adapt<About>();
+
+            var validationResult = await _createValidator.ValidateAsync(createAboutDto);
+
+            if (!validationResult.IsValid)
+            {
+                return BaseResult<object>.Fail(validationResult.Errors);
+
+            }
 
             await _aboutRepository.CreateAsync(about);
 
@@ -75,6 +87,14 @@ namespace Arkitektur.Business.Services.AboutServices
         {
             
             var about = updateAboutDto.Adapt<About>();
+
+            var validationResult = await _updateValidator.ValidateAsync(updateAboutDto);
+
+            if (!validationResult.IsValid)
+            {
+                return BaseResult<object>.Fail(validationResult.Errors);
+
+            }
 
             _aboutRepository.Update(about);
 
