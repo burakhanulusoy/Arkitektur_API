@@ -1,5 +1,6 @@
 ﻿using Arkitektur.WebUI.Options;
 using Arkitektur.WebUI.Services.AboutServices;
+using Arkitektur.WebUI.Services.AppointmentServices;
 using Arkitektur.WebUI.Services.BannerServices;
 using Arkitektur.WebUI.Services.CategoryServices;
 using Arkitektur.WebUI.Services.ChooseServices;
@@ -66,6 +67,11 @@ namespace Arkitektur.WebUI.Extensions
 
             });
 
+            services.AddHttpClient<IAppointmentService, AppointmentService>(options =>
+            {
+                options.BaseAddress = new Uri(apiOptions.baseUrl);
+
+            });
 
         }
 

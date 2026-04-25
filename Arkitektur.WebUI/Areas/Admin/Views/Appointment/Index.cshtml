@@ -1,0 +1,278 @@
+﻿@using Arkitektur.WebUI.DTOs.AppointmentDtos
+@using Arkitektur.WebUI.Enums
+@model List<ResultAppointmentDto>
+
+@{
+    ViewData["Title"] = "Randevu Yönetimi";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    var groupedAppointments = Model != null
+        ? Model.GroupBy(x => x.AppointmentDate.Date).OrderByDescending(g => g.Key).ToList()
+        : new List<IGrouping<DateTime, ResultAppointmentDto>>();
+}
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<style>
+    :root {
+        --glass-bg: rgba(255, 255, 255, 0.95);
+        --border-color: #f1f3f5;
+    }
+
+    body {
+        background-color: #f8f9fa;
+    }
+
+    .appointment-card {
+        background: var(--glass-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+    }
+
+    .accordion-item {
+        border: none !important;
+        margin-bottom: 1rem;
+        background: transparent;
+    }
+
+    .accordion-button {
+        background: white !important;
+        border-radius: 12px !important;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.03);
+        border: 1px solid var(--border-color);
+        padding: 1.25rem;
+    }
+
+        .accordion-button:not(.collapsed) {
+            color: #0d6efd;
+            box-shadow: 0 4px 20px rgba(13, 110, 253, 0.08);
+        }
+
+    .status-badge {
+        padding: 6px 12px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 0.8rem;
+    }
+
+    .btn-action {
+        width: 38px;
+        height: 38px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        cursor: pointer;
+        border: 1px solid #eee;
+        background: white;
+        transition: 0.2s;
+    }
+
+        .btn-action:hover {
+            background: #f8f9fa;
+            transform: translateY(-2px);
+        }
+
+    .modal-content {
+        border: none;
+        border-radius: 20px;
+    }
+</style>
+
+<div class="container-fluid py-4">
+    <div class="row mb-4">
+        <div class="col-12 d-flex justify-content-between align-items-center">
+            <div>
+                <h2 class="fw-bold text-dark m-0">Randevu Takvimi</h2>
+                <p class="text-muted small">Müşteri taleplerini buradan yönetin.</p>
+            </div>
+        </div>
+    </div>
+
+    @if (!groupedAppointments.Any())
+    {
+        <div class="text-center py-5 appointment-card">
+            <i class="bi bi-calendar-x fs-1 text-muted opacity-25"></i>
+            <h5 class="text-muted mt-3">Kayıtlı randevu bulunamadı.</h5>
+        </div>
+    }
+    else
+    {
+        <div class="accordion" id="appointmentAccordion">
+            @for (int i = 0; i < groupedAppointments.Count; i++)
+            {
+                var group = groupedAppointments[i];
+                string accordionId = $"collapse_{i}";
+
+                <div class="accordion-item shadow-sm">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button @(i == 0 ? "" : "collapsed")" type="button" data-bs-toggle="collapse" data-bs-target="#@accordionId">
+                            <div class="d-flex justify-content-between align-items-center w-100 me-3">
+                                <div>
+                                    <span class="fs-5 fw-bold">@group.Key.ToString("dd MMMM yyyy")</span>
+                                    <span class="text-muted ms-2 small">@group.Key.ToString("dddd")</span>
+                                </div>
+                                <span class="badge rounded-pill bg-light text-dark border">@group.Count() Randevu</span>
+                            </div>
+                        </button>
+                    </h2>
+                    <div id="@accordionId" class="accordion-collapse collapse @(i == 0 ? "show" : "")" data-bs-parent="#appointmentAccordion">
+                        <div class="accordion-body bg-white rounded-bottom-4 p-0">
+                            <div class="table-responsive">
+                                <table class="table align-middle mb-0">
+                                    <thead class="bg-light">
+                                        <tr>
+                                            <th class="ps-4">SAAT</th>
+                                            <th>MÜŞTERİ</th>
+                                            <th>HİZMET</th>
+                                            <th class="text-center">DURUM</th>
+                                            <th class="text-end pe-4">İŞLEMLER</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in group.OrderBy(x => x.AppointmentDate))
+                                        {
+                                            <tr>
+                                                <td class="ps-4 fw-bold text-primary">@item.AppointmentDate.ToString("HH:mm")</td>
+                                                <td>
+                                                    <div class="fw-bold">@item.NameSurname</div>
+                                                    <div class="small text-muted">@item.PhoneNumber</div>
+                                                </td>
+                                                <td>@item.ServiceName</td>
+                                                <td class="text-center">
+                                                    @if (item.Status == AppointmentStatus.Pending)
+                                                    {
+                                                        <span class="status-badge bg-warning-subtle text-warning">Onay Bekliyor</span>
+                                                    }
+                                                    else if (item.Status == AppointmentStatus.Approved)
+                                                    {
+
+                                                        <span class="status-badge bg-success-subtle text-success">Onaylandı</span>
+                                                    }
+                                                    else
+                                                    {
+
+                                                        <span class="status-badge bg-danger-subtle text-danger">İptal Edildi</span>
+                                                    }
+                                                </td>
+                                                <td class="text-end pe-4">
+                                                    <button onclick="showDetails('@item.NameSurname', '@item.Email', '@item.PhoneNumber', '@item.ServiceName', '@item.AppointmentDate', '@item.Message')" class="btn-action text-primary shadow-sm">
+                                                        <i class="bi bi-eye"></i>
+                                                    </button>
+
+                                                    @if (item.Status == AppointmentStatus.Pending)
+                                                    {
+                                                        <button onclick="approveAppointment(@item.Id)" class="btn-action text-success shadow-sm mx-1">
+                                                            <i class="bi bi-check-lg"></i>
+                                                        </button>
+                                                        <button onclick="cancelAppointment(@item.Id)" class="btn-action text-danger shadow-sm">
+                                                            <i class="bi bi-x-lg"></i>
+                                                        </button>
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+<div class="modal fade" id="detailModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content shadow-lg">
+            <div class="modal-header border-0">
+                <h5 class="fw-bold">Randevu Detayı</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="p-3 bg-light rounded-4 mb-3 d-flex align-items-center">
+                    <div class="bg-primary text-white rounded-circle p-2 me-3"><i class="bi bi-person fs-4"></i></div>
+                    <div>
+                        <div id="mName" class="fw-bold fs-5"></div>
+                        <div id="mEmail" class="small text-muted"></div>
+                    </div>
+                </div>
+                <div class="row g-3">
+                    <div class="col-6"><small class="text-muted d-block">Telefon</small><b id="mPhone"></b></div>
+                    <div class="col-6"><small class="text-muted d-block">Hizmet</small><b id="mService" class="text-primary"></b></div>
+                    <div class="col-12 border-top pt-3">
+                        <small class="text-muted d-block mb-1">Müşteri Notu</small>
+                        <div id="mMessage" class="p-3 rounded-3 bg-light small italic"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // 1. Detay Modalını Göster
+    function showDetails(name, email, phone, service, date, message) {
+        document.getElementById('mName').innerText = name;
+        document.getElementById('mEmail').innerText = email;
+        document.getElementById('mPhone').innerText = phone;
+        document.getElementById('mService').innerText = service;
+        document.getElementById('mMessage').innerText = message || "Mesaj bırakılmamış.";
+        new bootstrap.Modal(document.getElementById('detailModal')).show();
+    }
+
+    // 2. Randevu Onaylama (SweetAlert)
+    function approveAppointment(id) {
+        Swal.fire({
+            title: "Onaylıyor musunuz?",
+            text: "Bu randevuyu onay durumuna getirmek üzeresiniz.",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#198754",
+            cancelButtonColor: "#6c757d",
+            confirmButtonText: "Evet, Onayla!",
+            cancelButtonText: "Vazgeç"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: "Onaylandı!",
+                    text: "Randevu başarıyla güncellendi.",
+                    icon: "success",
+                    showConfirmButton: false,
+                    timer: 1500,
+                    timerProgressBar: true
+                }).then(() => {
+                    window.location.href = "/Admin/Appointment/ApproveAppointment/" + id;
+                });
+            }
+        });
+    }
+
+    // 3. Randevu İptal Etme (SweetAlert)
+    function cancelAppointment(id) {
+        Swal.fire({
+            title: "İptal etmek istediğinize emin misiniz?",
+            text: "Bu işlem randevuyu iptal edilmiş olarak işaretler.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#dc3545",
+            cancelButtonColor: "#6c757d",
+            confirmButtonText: "Evet, İptal Et!",
+            cancelButtonText: "Hayır"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: "İptal Edildi!",
+                    text: "Randevu iptal edildi.",
+                    icon: "success",
+                    showConfirmButton: false,
+                    timer: 1500,
+                    timerProgressBar: true
+                }).then(() => {
+                    window.location.href = "/Admin/Appointment/CancelAppointment/" + id;
+                });
+            }
+        });
+    }
+</script>

@@ -1,4 +1,5 @@
 ﻿using Arkitektur.WebUI.Options;
+using Arkitektur.WebUI.Services.MessageService;
 
 namespace Arkitektur.WebUI.Extensions
 {
@@ -12,6 +13,7 @@ namespace Arkitektur.WebUI.Extensions
 
             services.Configure<ApiOptions>(configuration.GetSection(nameof(ApiOptions)));
 
+            services.AddScoped<IMessageService, MessageService>();
 
         }
 

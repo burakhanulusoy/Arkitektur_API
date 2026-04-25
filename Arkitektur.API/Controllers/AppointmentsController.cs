@@ -1,7 +1,5 @@
 ﻿using Arkitektur.Business.Services.AppointmentServices;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace Arkitektur.API.Controllers
 {
@@ -48,7 +46,7 @@ namespace Arkitektur.API.Controllers
 
             var response = await _appointmentService.DeleteAsync(id);
 
-            return response.IsSuccessful ? NoContent() : BadRequest(response);
+            return response.IsSuccessful ? Ok(response) : BadRequest(response);
 
         }
 
@@ -57,7 +55,7 @@ namespace Arkitektur.API.Controllers
         {
             var response = await _appointmentService.UpdateAsync(updateAppointmentDto);
 
-            return response.IsSuccessful ? NoContent() : BadRequest(response);
+            return response.IsSuccessful ? Ok(response) : BadRequest(response);
 
         }
 
