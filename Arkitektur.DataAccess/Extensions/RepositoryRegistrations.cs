@@ -16,7 +16,7 @@ namespace Arkitektur.DataAccess.Extensions
 
         public static IServiceCollection AddRepositoriesExt(this IServiceCollection services,IConfiguration configuration)
         {
-
+            //SQL baðlantýýs ve validayon hata !!
             services.AddDbContext<AppDbContext>(options =>
             {
 

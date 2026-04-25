@@ -49,6 +49,7 @@ namespace Arkitektur.Business.Extensions
 
             services.AddAWSService<IAmazonS3>();
 
+            // validator ayarý
 
 
             // services.AddValidatorsFromAssembly(typeof(CreateAppointmentValidator).Assembly);

@@ -1,0 +1,89 @@
+﻿@model List<ResultFeatureDto>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    int count = 0;
+
+    // Sadece son eklenen kaydın Id'sini buluyoruz
+    var lastAddedId = Model?.OrderByDescending(x => x.Id).Select(x => x.Id).FirstOrDefault();
+}
+
+<table class="table table-bordered table-hover align-middle mt-3">
+
+    <tr>
+        <td>#</td>
+        <td>Başlık</td>
+        <td>Açıklama</td>
+        <td>Icon</td>
+        <td>İşlemler</td>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        count++;
+        // Eğer döngüdeki bu satır son eklenen kayıt ise arka planını yeşil yapacak sınıfı belirliyoruz
+        string rowClass = (item.Id == lastAddedId) ? "table-success" : "";
+
+        <tr class="@rowClass">
+            <td>
+                <span class="fw-bold fs-5 me-2">@count</span>
+                <img src="@item.BacgroundImage" alt="Arka Plan Fotoğrafı" style="width:75px;height:75px; object-fit:cover; border-radius:8px;" />
+            </td>
+            <td class="fw-bold">
+                @item.Title
+
+                @if (item.Id == lastAddedId)
+                {
+                    <span class="badge bg-success ms-2"><i class="bi bi-stars"></i> Şuan Yayında</span>
+                }
+            </td>
+            <td>@item.Description</td>
+            <td>
+                <img src="@item.Icon" style="width:100px;height:100px; object-fit:contain;" />
+            </td>
+            <td>
+                <a href="/Admin/Feature/UpdateFeature/@item.Id" class="btn btn-primary">
+                    <i class="bi bi-pencil-square me-1"></i> Düzenle
+                </a>
+                <button onclick="deleteFeature(@item.Id)" class="btn btn-danger">
+                    <i class="bi bi-trash me-1"></i> Sil
+                </button>
+            </td>
+        </tr>
+    }
+</table>
+
+<a class="btn btn-success mt-2" href="/Admin/Feature/CreateFeature"> <i class="bi bi-plus-circle me-1"></i> Yeni Öne Çıkan Ekle</a>
+
+<script>
+    function deleteFeature(id) {
+        Swal.fire({
+            title: "Silmek istediğinize emin misiniz?",
+            text: "Bu işlemi geri alamazsınız!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Evet, sil!",
+            cancelButtonText: "İptal"
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                // Başarı mesajını ayarla ve bitmesini bekle
+                Swal.fire({
+                    title: "Silindi!",
+                    text: "Öğeniz başarılı bir şekilde silindi.",
+                    icon: "success",
+                    showConfirmButton: false, // Onay butonunu gizle
+                    timer: 2000, // Ekranda 2 saniye (2000ms) kalsın
+                    timerProgressBar: true // Şık bir geri sayım barı ekle
+                }).then(() => {
+                    // Alert süresi dolup kapandıktan SONRA yönlendirmeyi yap
+                    window.location.href = "/Admin/Feature/DeleteFeature/" + id;
+                });
+
+            }
+        });
+    }
+</script>

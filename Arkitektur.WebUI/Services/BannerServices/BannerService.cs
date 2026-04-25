@@ -42,10 +42,6 @@ namespace Arkitektur.WebUI.Services.BannerServices
 
             return await response.Content.ReadFromJsonAsync<BaseResult<object>>();
 
-
-
-
-
         }
 
         public async Task<BaseResult<List<ResultBannerDto>>> GetAllAsync()

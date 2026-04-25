@@ -1,0 +1,67 @@
+﻿@model CreateFeatureDto
+@{
+    ViewData["Title"] = "CreateFeature";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<form id="createFeatureForm" enctype="multipart/form-data" method="post">
+
+
+
+    <div class="form-group">
+        <label>Başlık</label>
+        <input type="text" placeholder="Başlık Yazınız..." asp-for="Title" class="form-control"  />
+        <span class="text-danger" asp-validation-for="Title"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Açıklama</label>
+        <textarea placeholder="Açıklama Yazınız..." asp-for="Description" class="form-control" rows="4" ></textarea>
+        <span class="text-danger" asp-validation-for="Description"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Arka Plan Görseli Seçin</label>
+        <input type="file" placeholder="Görsel Seçiniz..." asp-for="file" class="form-control"  />
+        <span class="text-danger" asp-validation-for="file"></span>
+    </div>
+
+    <div class="form-group">
+        <label>İcon Url'i</label>
+        <input type="url" placeholder="Url Yazınız..." asp-for="Icon" class="form-control"  />
+        <span class="text-danger" asp-validation-for="Icon"></span>
+    </div>
+
+    <button type="button" onclick="confirmCreate()" class="btn btn-success">Oluştur</button>
+
+</form>
+
+<script>
+    function confirmCreate() {
+        var form = document.getElementById("createFeatureForm");
+
+        // Formdaki gerekli alanlar doldurulmuş mu diye tarayıcının kendi basit kontrolünü yapıyoruz
+        if (!form.checkValidity()) {
+            form.reportValidity(); // Boş yer varsa uyarı versin ve SweetAlert açılmasın
+            return;
+        }
+
+        // Form doluysa SweetAlert'i göster
+        Swal.fire({
+            title: "Yeni Kayıt Eklensin mi?",
+            text: "Eğer yeni bir 'Öne Çıkanlar' alanı eklerseniz sitenizde sadece bu özellik görünecek, daha önce ekledikleriniz geçersiz durumda olacaktır. Onaylıyor musunuz?",
+            icon: "info",
+            showCancelButton: true,
+            confirmButtonColor: "#198754",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Evet, Oluştur!",
+            cancelButtonText: "İptal"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                form.submit();
+            }
+        });
+    }
+</script>
+
