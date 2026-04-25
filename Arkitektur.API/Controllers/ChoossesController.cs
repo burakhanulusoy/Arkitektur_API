@@ -40,7 +40,7 @@ namespace Arkitektur.API.Controllers
         {
             var response = await _chooseService.UpdateAsync(updateChooseDto);
            
-            return response.IsSuccessful ? NoContent() : BadRequest(response);
+            return response.IsSuccessful ? Ok(response) : BadRequest(response);
         }
 
         [HttpDelete("{id}")]
@@ -49,7 +49,7 @@ namespace Arkitektur.API.Controllers
 
             var response = await _chooseService.DeleteAsync(id);
 
-            return response.IsSuccessful ? NoContent() : BadRequest(response);
+            return response.IsSuccessful ? Ok(response) : BadRequest(response);
 
         }
 
