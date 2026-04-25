@@ -1,17 +1,15 @@
-﻿@model CreateAboutDto
+﻿@model CreateBannerDto
+
 
 @{
-    ViewData["Title"] = "CreateAbout";
+    ViewData["Title"] = "CreateBanner";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<form id="createAboutForm" enctype="multipart/form-data" method="post">
 
-    <div class="form-group">
-        <label>Kuruluş Yılı</label>
-        <input type="number" placeholder="Kuruluş Yılını Yazınız..." asp-for="StartYear" class="form-control" required />
-        <span class="text-danger" asp-validation-for="StartYear"></span>
-    </div>
+<form id="createBannerForm" enctype="multipart/form-data" method="post">
+
+    
 
     <div class="form-group">
         <label>Başlık</label>
@@ -37,7 +35,7 @@
 
 <script>
     function confirmCreate() {
-        var form = document.getElementById("createAboutForm");
+        var form = document.getElementById("createBannerForm");
 
         // Formdaki gerekli alanlar doldurulmuş mu diye tarayıcının kendi basit kontrolünü yapıyoruz
         if (!form.checkValidity()) {
@@ -48,7 +46,7 @@
         // Form doluysa SweetAlert'i göster
         Swal.fire({
             title: "Yeni Kayıt Eklensin mi?",
-            text: "Eğer yeni bir 'Hakkımızda' alanı eklerseniz sitenizde sadece bu özellik görünecek, daha önce ekledikleriniz geçersiz durumda olacaktır. Onaylıyor musunuz?",
+            text: "Eğer yeni bir 'Öne Çıkanlar' alanı eklerseniz sitenizde sadece bu özellik görünecek, daha önce ekledikleriniz geçersiz durumda olacaktır. Onaylıyor musunuz?",
             icon: "info",
             showCancelButton: true,
             confirmButtonColor: "#198754",

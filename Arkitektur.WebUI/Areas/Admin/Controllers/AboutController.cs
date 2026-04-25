@@ -10,7 +10,6 @@ namespace Arkitektur.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> Index()
         {
             var abouts = await _aboutService.GetAllAsync();
-
             return View(abouts.Data);
         }
 

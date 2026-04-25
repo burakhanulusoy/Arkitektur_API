@@ -1,0 +1,84 @@
+﻿@model List<ResultBannerDto>
+
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    int count = 0;
+}
+
+
+<table class="table table-bordered table-hover">
+
+    <tr>
+        <td>#</td>
+        <td>Başlık</td>
+        <td>Açıklama</td>
+        <td>İşlemler</td>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        count++;
+        <tr>
+            <td>
+                @count
+                <img src="@item.ImageUrl" style="width:125px;height:125px;" alt="Hakkımzda alanı görseli" />
+            </td>
+            <td>@item.Title</td>
+            <td>@item.Description</td>
+            <td>
+                <a href="/Admin/Banner/UpdateBanner/@item.Id" class="btn btn-primary">
+                    <i class="bi bi-pencil-square me-1"></i> Düzenle
+                </a>
+                <button onclick="deleteBanner(@item.Id)" class="btn btn-danger">
+                    <i class="bi bi-trash me-1"></i> Sil
+                </button>
+
+            </td>
+        </tr>
+
+    }
+
+</table>
+
+
+
+<a class="btn btn-success" href="/Admin/Banner/CreateBanner"> <i class="bi bi-plus-circle me-1"></i> Yeni Öne Çıkan Ekle</a>
+
+<script>
+    function deleteBanner(id) {
+        Swal.fire({
+            title: "Silmek istediğinize emin misiniz?",
+            text: "Bu işlemi geri alamazsınız!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Evet, sil!",
+            cancelButtonText: "İptal"
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                // Başarı mesajını ayarla ve bitmesini bekle
+                Swal.fire({
+                    title: "Silindi!",
+                    text: "Öğeniz başarılı bir şekilde silindi.",
+                    icon: "success",
+                    showConfirmButton: false, // Onay butonunu gizle
+                    timer: 2000, // Ekranda 2 saniye (2000ms) kalsın
+                    timerProgressBar: true // Şık bir geri sayım barı ekle
+                }).then(() => {
+                    // Alert süresi dolup kapandıktan SONRA yönlendirmeyi yap
+                    window.location.href = "/Admin/Banner/DeleteBanner/" + id;
+                });
+
+            }
+        });
+    }
+</script>
+
+
+
+
+

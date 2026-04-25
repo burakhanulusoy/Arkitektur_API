@@ -31,7 +31,7 @@ namespace Arkitektur.API.Controllers
 
             var response = await _bannerService.DeleteAsync(id);
 
-            return response.IsSuccessful ? NoContent() : BadRequest(response);
+            return response.IsSuccessful ? Ok(response) : BadRequest(response);
 
         }
 
@@ -41,7 +41,7 @@ namespace Arkitektur.API.Controllers
         {
             var response = await _bannerService.UpdateAsync(updateBannerDto);
 
-            return response.IsSuccessful ? NoContent() : BadRequest(response);
+            return response.IsSuccessful ? Ok(response) : BadRequest(response);
 
 
         }
