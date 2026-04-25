@@ -11,8 +11,8 @@ namespace Arkitektur.WebUI.Services.FeatureServices
         {
 
             var imageResponse = await _fileService.UploadFileAsync(createDto.file);
-            
-            if(imageResponse.IsFailure)
+
+            if (imageResponse.IsFailure)
             {
                 throw new ApiValidationException(imageResponse.Errors);
             }
@@ -23,7 +23,17 @@ namespace Arkitektur.WebUI.Services.FeatureServices
 
             var result = await response.Content.ReadFromJsonAsync<BaseResult<object>>();
 
-            return result.IsFailure ? throw new ApiValidationException(result.Errors):result;
+            if(result.IsFailure)
+            {
+                await  _fileService.DeleteFileAsync(imageResponse.Data.ImageUrl);
+                throw new ApiValidationException(result.Errors);
+            }
+
+          
+
+           
+
+            return result;
 
 
         }
@@ -58,9 +68,14 @@ namespace Arkitektur.WebUI.Services.FeatureServices
            
             if(updateDto.file is not null)
             {
-                await _fileService.DeleteFileAsync(updateDto.BacgroundImage);
-
                 var imageResponse = await _fileService.UploadFileAsync(updateDto.file);
+
+                if(imageResponse.IsFailure)
+                {
+                    throw new ApiValidationException(imageResponse.Errors);
+                }
+
+                await _fileService.DeleteFileAsync(updateDto.BacgroundImage);
 
                 updateDto.BacgroundImage = imageResponse.Data.ImageUrl;
             }
@@ -69,9 +84,12 @@ namespace Arkitektur.WebUI.Services.FeatureServices
 
             var result = await response.Content.ReadFromJsonAsync<BaseResult<object>>();
 
-            return result.IsFailure ?  throw new ApiValidationException(result.Errors): result;
+            if (result.IsFailure)
+            {
+                throw new ApiValidationException(result.Errors);
+            }
 
-
+            return result;
 
 
 

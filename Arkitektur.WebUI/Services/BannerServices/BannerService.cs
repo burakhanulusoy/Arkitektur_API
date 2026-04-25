@@ -23,9 +23,13 @@ namespace Arkitektur.WebUI.Services.BannerServices
 
             var result = await response.Content.ReadFromJsonAsync<BaseResult<object>>();
 
-            return result.IsFailure ? throw new ApiValidationException(result.Errors) : result;
+            if(result.IsFailure)
+            {
+                await _fileService.DeleteFileAsync(createDto.ImageUrl);
+                throw new ApiValidationException(result.Errors);
+            }
 
-
+            return result;
 
 
 
@@ -60,9 +64,16 @@ namespace Arkitektur.WebUI.Services.BannerServices
           
             if(updateDto.file is not null)
             {
-                await _fileService.DeleteFileAsync(updateDto.ImageUrl);
+               
 
                 var imageResponse = await _fileService.UploadFileAsync(updateDto.file);
+
+                if(imageResponse.IsFailure)
+                {
+                    throw new ApiValidationException(imageResponse.Errors);
+                }
+
+                await _fileService.DeleteFileAsync(updateDto.ImageUrl);
 
                 updateDto.ImageUrl = imageResponse.Data.ImageUrl;
             }

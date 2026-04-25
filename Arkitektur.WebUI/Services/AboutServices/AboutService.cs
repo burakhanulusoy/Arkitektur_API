@@ -10,25 +10,30 @@ namespace Arkitektur.WebUI.Services.AboutServices
     {
         public async Task<BaseResult<object>> CreateAsync(CreateAboutDto createDto)
         {
-
             var imageResponse = await _fileService.UploadFileAsync(createDto.file);
 
-            if(imageResponse.IsFailure)
+            if (imageResponse.IsFailure)
             {
                 throw new ApiValidationException(imageResponse.Errors);
             }
 
-
             createDto.ImageUrl = imageResponse.Data.ImageUrl;
+
 
             var response = await _client.PostAsJsonAsync("abouts", createDto);
 
             var result = await response.Content.ReadFromJsonAsync<BaseResult<object>>();
 
-            return result.IsFailure ? throw new ApiValidationException(result.Errors) : result;
+            if(result.IsFailure)
+            {
+                 await _fileService.DeleteFileAsync(imageResponse.Data.ImageUrl);
+
+                 throw new ApiValidationException(result.Errors);
+            }
 
 
 
+            return result;
 
         }
 
@@ -67,9 +72,17 @@ namespace Arkitektur.WebUI.Services.AboutServices
            
               if(updateDto.file is not null)
               {
-                await _fileService.DeleteFileAsync(updateDto.ImageUrl);
 
                 var imageResponse = await _fileService.UploadFileAsync(updateDto.file);
+
+                if(imageResponse.IsFailure)
+                {
+                    throw new ApiValidationException(imageResponse.Errors);
+                }
+
+
+
+                await _fileService.DeleteFileAsync(updateDto.ImageUrl);
 
                 updateDto.ImageUrl = imageResponse.Data.ImageUrl;
 
