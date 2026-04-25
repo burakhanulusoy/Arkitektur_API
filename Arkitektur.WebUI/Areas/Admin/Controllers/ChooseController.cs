@@ -7,10 +7,7 @@ namespace Arkitektur.WebUI.Areas.Admin.Controllers
     [Area("Admin")]
     public class ChooseController(IChooseService _chooseService) : Controller
     {
-
-
-
-        public async Task<IActionResult> Index()
+       public async Task<IActionResult> Index()
         {
             var item = await _chooseService.GetAllAsync();
 
@@ -49,27 +46,6 @@ namespace Arkitektur.WebUI.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
 
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     }
 }

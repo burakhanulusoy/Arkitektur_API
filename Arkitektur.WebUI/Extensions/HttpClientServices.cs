@@ -3,6 +3,7 @@ using Arkitektur.WebUI.Services.AboutServices;
 using Arkitektur.WebUI.Services.BannerServices;
 using Arkitektur.WebUI.Services.CategoryServices;
 using Arkitektur.WebUI.Services.ChooseServices;
+using Arkitektur.WebUI.Services.ContactService;
 using Arkitektur.WebUI.Services.FileServices;
 using Arkitektur.WebUI.Services.ProjectServices;
 
@@ -52,7 +53,11 @@ namespace Arkitektur.WebUI.Extensions
 
             });
 
+            services.AddHttpClient<IContactService, ContactService>(options =>
+            {
+                options.BaseAddress = new Uri(apiOptions.baseUrl);
 
+            });
 
 
         }

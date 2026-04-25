@@ -43,7 +43,7 @@ namespace Arkitektur.API.Controllers
         {
             var response = await _contactService.UpdateAsync(updateContactDto);
 
-            return response.IsSuccessful ? NoContent() : BadRequest(response);
+            return response.IsSuccessful ? Ok(response) : BadRequest(response);
 
         }
 
@@ -53,7 +53,7 @@ namespace Arkitektur.API.Controllers
 
             var response = await _contactService.DeleteAsync(id);
 
-            return response.IsSuccessful ? NoContent() : BadRequest(response);
+            return response.IsSuccessful ? Ok(response) : BadRequest(response);
 
 
         }

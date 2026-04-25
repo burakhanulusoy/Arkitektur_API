@@ -1,0 +1,152 @@
+﻿@model UpdateContactDto
+@{
+    ViewData["Title"] = "İletişim Bilgisini Güncelle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<div class="container-fluid py-4">
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-white py-3">
+            <h5 class="m-0 font-weight-bold text-primary">
+                <i class="bi bi-pencil-square me-2"></i> İletişim Bilgisini Güncelle
+            </h5>
+        </div>
+
+        <div class="card-body p-4">
+            <form id="updateContactForm" method="post">
+                <input type="hidden" asp-for="Id" />
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold"><i class="bi bi-telephone text-primary me-1"></i> Telefon Numarası</label>
+                            <input type="text" asp-for="PhoneNumber" class="form-control" placeholder="Örn: 0212 555 55 55" required />
+                            <span class="text-danger small" asp-validation-for="PhoneNumber"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold"><i class="bi bi-envelope-at text-danger me-1"></i> E-Posta Adresi</label>
+                            <input type="email" asp-for="Email" class="form-control" placeholder="Örn: info@sirketiniz.com" required />
+                            <span class="text-danger small" asp-validation-for="Email"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold"><i class="bi bi-geo-alt text-success me-1"></i> Açık Adres</label>
+                            <textarea asp-for="Address" class="form-control" rows="4" placeholder="Tam adresinizi yazınız..." required></textarea>
+                            <span class="text-danger small" asp-validation-for="Address"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="mb-2 d-flex justify-content-between align-items-end">
+                            <label class="form-label fw-bold m-0"><i class="bi bi-map-fill text-warning me-1"></i> Konumu Güncelle</label>
+                            <span class="badge bg-info text-dark"><i class="bi bi-mouse me-1"></i>Değiştirmek için tıklayın</span>
+                        </div>
+
+                        <div id="interactive-map" class="border border-2 rounded-3 shadow-sm mb-3" style="height: 250px; width: 100%; z-index: 1;"></div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold text-muted small"><i class="bi bi-code-slash me-1"></i> Kayıtlı Google Maps Kodu</label>
+                            <textarea asp-for="MapUrl" id="MapUrl" class="form-control bg-light text-muted small" rows="2" readonly required></textarea>
+                            <span class="text-danger small" asp-validation-for="MapUrl"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="my-4 text-muted">
+
+                <div class="d-flex justify-content-end">
+                    <a href="/Admin/Contact/Index" class="btn btn-secondary me-2">
+                        <i class="bi bi-arrow-left me-1"></i> Vazgeç
+                    </a>
+                    <button type="button" onclick="confirmUpdate()" class="btn btn-success shadow-sm">
+                        <i class="bi bi-check2-circle me-1"></i> Değişiklikleri Kaydet
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    // --- İNTERAKTİF HARİTA (LEAFLET) AYARLARI ---
+
+    // Varsayılan başlangıç koordinatları (Kütahya)
+    var defaultLat = 39.4200;
+    var defaultLng = 29.9860;
+    var zoomLevel = 13;
+
+    // Veritabanından gelen mevcut MapUrl (Iframe) kodunu al
+    var existingMapUrl = document.getElementById('MapUrl').value;
+
+    // İçindeki koordinatları (Örn: 39.4200,29.9860) yakalamak için güçlü bir arama yap
+    var match = existingMapUrl.match(/(-?\d+\.\d+),\s*(-?\d+\.\d+)/);
+
+    // Eğer kodun içinde koordinat bulursak, harita başlangıç noktasını orası yap
+    if (match && match.length >= 3) {
+        defaultLat = parseFloat(match[1]);
+        defaultLng = parseFloat(match[2]);
+        zoomLevel = 15; // Kayıtlı yer varsa daha yakından başla
+    }
+
+    // Haritayı oluştur
+    var map = L.map('interactive-map').setView([defaultLat, defaultLng], zoomLevel);
+
+    // Açık kaynak harita görselleri
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    // İşaretçiyi (Pin) ekle
+    var marker = L.marker([defaultLat, defaultLng], { draggable: true }).addTo(map);
+
+    // Kodu üreten fonksiyon (GERÇEK VE ÇALIŞAN GOOGLE MAPS LİNKİ)
+    function updateGoogleMapCode(lat, lng) {
+        // q=lat,lng parametresi Google Maps'te tam o noktaya pin atar
+        var iframeCode = `<iframe src="https://maps.google.com/maps?q=${lat},${lng}&hl=tr&z=15&output=embed" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`;
+        document.getElementById('MapUrl').value = iframeCode;
+    }
+
+    // Pin sürüklendiğinde kodu güncelle
+    marker.on('dragend', function (e) {
+        var position = marker.getLatLng();
+        updateGoogleMapCode(position.lat, position.lng);
+    });
+
+    // Haritaya tıklandığında pini taşı ve kodu güncelle
+    map.on('click', function (e) {
+        marker.setLatLng(e.latlng);
+        updateGoogleMapCode(e.latlng.lat, e.latlng.lng);
+    });
+
+    // --- SWEETALERT ONAY İŞLEMİ ---
+    function confirmUpdate() {
+        var form = document.getElementById("updateContactForm");
+
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+        }
+
+        Swal.fire({
+            title: "Değişiklikler Kaydedilsin mi?",
+            text: "İletişim bilgilerini güncelliyorsunuz. Bu işlem sitedeki mevcut iletişim bilgilerini değiştirecektir.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#198754",
+            cancelButtonColor: "#6c757d",
+            confirmButtonText: "Evet, Güncelle!",
+            cancelButtonText: "İptal",
+            borderRadius: "15px"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                form.submit();
+            }
+        });
+    }
+</script>

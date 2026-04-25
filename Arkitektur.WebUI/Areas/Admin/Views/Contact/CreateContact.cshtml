@@ -1,0 +1,143 @@
+﻿@model CreateContactDto
+
+@{
+    ViewData["Title"] = "Yeni İletişim Bilgisi Ekle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<div class="container-fluid py-4">
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-white py-3">
+            <h5 class="m-0 font-weight-bold text-primary">
+                <i class="bi bi-plus-circle-dotted me-2"></i> Yeni İletişim Bilgisi Oluştur
+            </h5>
+        </div>
+
+        <div class="card-body p-4">
+            <form id="createContactForm" method="post">
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold"><i class="bi bi-telephone text-primary me-1"></i> Telefon Numarası</label>
+                            <input type="text" asp-for="PhoneNumber" class="form-control" placeholder="Örn: 0212 555 55 55" required />
+                            <span class="text-danger small" asp-validation-for="PhoneNumber"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold"><i class="bi bi-envelope-at text-danger me-1"></i> E-Posta Adresi</label>
+                            <input type="email" asp-for="Email" class="form-control" placeholder="Örn: info@sirketiniz.com" required />
+                            <span class="text-danger small" asp-validation-for="Email"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold"><i class="bi bi-geo-alt text-success me-1"></i> Açık Adres</label>
+                            <textarea asp-for="Address" class="form-control" rows="4" placeholder="Tam adresinizi yazınız..." required></textarea>
+                            <span class="text-danger small" asp-validation-for="Address"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="mb-2 d-flex justify-content-between align-items-end">
+                            <label class="form-label fw-bold m-0"><i class="bi bi-map-fill text-warning me-1"></i> Haritadan Konum Seçin</label>
+                            <span class="badge bg-info text-dark"><i class="bi bi-mouse me-1"></i>Tıklayın veya Sürükleyin</span>
+                        </div>
+
+                        <div id="interactive-map" class="border border-2 rounded-3 shadow-sm mb-3" style="height: 250px; width: 100%; z-index: 1;"></div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold text-muted small"><i class="bi bi-code-slash me-1"></i> Otomatik Oluşturulan Google Maps Kodu</label>
+                            <textarea asp-for="MapUrl" id="MapUrl" class="form-control bg-light text-muted small" rows="2" readonly required placeholder="Haritadan bir konum seçtiğinizde kod buraya otomatik olarak oluşturulacaktır..."></textarea>
+                            <span class="text-danger small" asp-validation-for="MapUrl"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="my-4 text-muted">
+
+                <div class="d-flex justify-content-end">
+                    <a href="/Admin/Contact/Index" class="btn btn-secondary me-2">
+                        <i class="bi bi-arrow-left me-1"></i> Vazgeç
+                    </a>
+                    <button type="button" onclick="confirmCreate()" class="btn btn-success shadow-sm">
+                        <i class="bi bi-check2-circle me-1"></i> Oluştur ve Kaydet
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // --- İNTERAKTİF HARİTA (LEAFLET) AYARLARI ---
+
+    // Varsayılan koordinatlar (Türkiye'nin ortası veya Kütahya/Ankara gibi bir nokta)
+    var defaultLat = 39.4242;
+    var defaultLng = 29.9833;
+
+    // Haritayı oluştur ve başlat
+    var map = L.map('interactive-map').setView([defaultLat, defaultLng], 6);
+
+    // Açık kaynak harita görsellerini (OpenStreetMap) çek
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Sürüklenebilir bir işaretçi (Pin) ekle
+    var marker = L.marker([defaultLat, defaultLng], { draggable: true }).addTo(map);
+
+    // Koordinatlardan Google Maps Iframe kodunu üreten fonksiyon
+    function updateGoogleMapCode(lat, lng) {
+        // Enlem ve boylam bilgisini Google Maps iframe formatına çeviriyoruz
+        var iframeCode = `<iframe src="https://maps.google.com/maps?q=${lat},${lng}&hl=tr&z=15&output=embed" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`;
+
+        // Üretilen kodu Input alanına (MapUrl) yaz
+        document.getElementById('MapUrl').value = iframeCode;
+    }
+
+    // İlk açılışta boş durmaması için varsayılan yeri oluştur
+    updateGoogleMapCode(defaultLat, defaultLng);
+
+    // İşaretçi (Pin) sürüklendiğinde kodu güncelle
+    marker.on('dragend', function (e) {
+        var position = marker.getLatLng();
+        updateGoogleMapCode(position.lat, position.lng);
+    });
+
+    // Haritada herhangi bir yere tıklandığında işaretçiyi oraya taşı ve kodu güncelle
+    map.on('click', function (e) {
+        marker.setLatLng(e.latlng);
+        updateGoogleMapCode(e.latlng.lat, e.latlng.lng);
+    });
+
+
+    // --- SWEETALERT VE FORM ONAY AYARLARI ---
+    function confirmCreate() {
+        var form = document.getElementById("createContactForm");
+
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+        }
+
+        Swal.fire({
+            title: "Yeni Kayıt Eklensin mi?",
+            text: "Eğer yeni bir 'İletişim' alanı eklerseniz sitenizde aktif olarak bu iletişim bilgileri görünecektir. Onaylıyor musunuz?",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#198754",
+            cancelButtonColor: "#6c757d",
+            confirmButtonText: "Evet, Oluştur!",
+            cancelButtonText: "İptal",
+            borderRadius: "15px"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                form.submit();
+            }
+        });
+    }
+</script>
