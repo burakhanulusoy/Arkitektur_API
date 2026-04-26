@@ -1,0 +1,113 @@
+﻿@model List<AssignRoleDto>
+
+@{
+    ViewData["Title"] = "Rol Atama";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    // Hata almamak için güvenli bir şekilde kullanıcı adını alıyoruz
+    var userName = Model != null && Model.Any() ? Model[0].FullName : "Kullanıcı";
+}
+
+<style>
+    .corp-card {
+        background: #ffffff;
+        border-radius: 8px;
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.03);
+    }
+
+    .role-switch-box {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        padding: 1.25rem;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+        .role-switch-box:hover {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+        }
+
+    /* Bootstrap Switch'i biraz daha belirgin (kurumsal) yapıyoruz */
+    .form-switch .form-check-input {
+        width: 2.5em;
+        height: 1.25em;
+        cursor: pointer;
+    }
+
+    .form-check-label {
+        cursor: pointer;
+        font-weight: 600;
+        color: #334155;
+        margin-left: 0.5rem;
+    }
+
+    .btn-corp-primary {
+        background-color: #0f172a;
+        color: #ffffff;
+        font-weight: 500;
+        transition: all 0.2s;
+    }
+
+        .btn-corp-primary:hover {
+            background-color: #1e293b;
+            color: #ffffff;
+            transform: translateY(-1px);
+        }
+</style>
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h3 class="fw-bold m-0" style="color: #0f172a;"><i class="bi bi-shield-lock text-primary me-2"></i>Yetkilendirme</h3>
+            <p class="text-muted small m-0 mt-1">
+                <span class="fw-bold text-dark" style="font-size: 0.9rem;">@userName</span> adlı kullanıcının sistem yetkilerini düzenliyorsunuz.
+            </p>
+        </div>
+        <div>
+            <a href="/Admin/User/Index" class="btn btn-sm btn-light border shadow-sm">
+                <i class="bi bi-arrow-left me-1"></i> Listeye Dön
+            </a>
+        </div>
+    </div>
+
+    <div class="corp-card">
+        <div class="card-body p-4 p-md-5">
+            <form method="post">
+                <div class="row g-3">
+                    @for (int i = 0; i < Model.Count; i++)
+                    {
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="role-switch-box form-switch">
+
+                                <input type="hidden" asp-for="@Model[i].RoleId" />
+                                <input type="hidden" asp-for="@Model[i].UserId" />
+                                <input type="hidden" asp-for="@Model[i].RoleName" />
+
+                                <div class="d-flex align-items-center">
+                                    <div class="bg-white border rounded p-2 me-3 shadow-sm">
+                                        <i class="bi bi-person-workspace text-secondary fs-5"></i>
+                                    </div>
+                                    <label class="form-check-label m-0" for="roleSwitch_@i">@Model[i].RoleName</label>
+                                </div>
+
+                                <input type="checkbox" asp-for="@Model[i].RoleExist" id="roleSwitch_@i" class="form-check-input m-0 shadow-sm" />
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <div class="d-flex justify-content-end align-items-center mt-5 pt-4 border-top">
+                    <a href="/Admin/User/Index" class="btn btn-link text-muted text-decoration-none me-3">Vazgeç</a>
+                    <button type="submit" class="btn btn-corp-primary px-4 py-2">
+                        <i class="bi bi-check2-circle me-2"></i>Değişiklikleri Kaydet
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

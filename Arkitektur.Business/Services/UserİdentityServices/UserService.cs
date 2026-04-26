@@ -6,8 +6,7 @@ using Arkitektur.Entity.Entities;
 using FluentValidation;
 using Mapster;
 using Microsoft.AspNetCore.Identity;
-
-
+using Microsoft.EntityFrameworkCore;
 
 namespace Arkitektur.Business.Services.UserİdentityServices
 {
@@ -50,6 +49,25 @@ namespace Arkitektur.Business.Services.UserİdentityServices
 
 
 
+
+        }
+
+        public async Task<BaseResult<List<ResultUserDto>>> GetAllUserAsync()
+        {
+
+            var users = await _userManager.Users.ToListAsync();
+
+            var mappedUsers = users.Adapt<List<ResultUserDto>>();
+
+            foreach (var user in users)
+            {
+                var userRoles = await _userManager.GetRolesAsync(user);
+
+                mappedUsers.Find(x => x.Id == user.Id).Roles = userRoles;
+            }
+            
+
+            return BaseResult<List<ResultUserDto>>.Success(mappedUsers);
 
         }
 

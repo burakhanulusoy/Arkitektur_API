@@ -1,0 +1,195 @@
+﻿@model List<ResultUserDto>
+
+@{
+    ViewData["Title"] = "Kullanıcı Yönetimi";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    int count = 0;
+}
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<style>
+    /* Tabloya özel ufak kurumsal dokunuşlar */
+    .corp-table-card {
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+        border: 1px solid #e2e8f0;
+    }
+
+    .corp-table th {
+        background-color: #f8fafc;
+        color: #64748b;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        padding: 1rem;
+        border-bottom: 2px solid #e2e8f0;
+    }
+
+    .corp-table td {
+        padding: 1rem;
+        vertical-align: middle;
+        border-bottom: 1px solid #f1f5f9;
+        color: #334155;
+    }
+
+    .corp-table tbody tr:hover {
+        background-color: #fcfcfd;
+    }
+
+    .user-avatar {
+        width: 45px;
+        height: 45px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 2px solid #e2e8f0;
+        padding: 2px;
+    }
+
+    /* Tema Çakışmasını Önleyen Kesin Çözüm Rol Etiketleri */
+    .custom-role-badge {
+        background-color: #e0f2fe !important; /* Çok hafif kurumsal mavi arka plan */
+        color: #0369a1 !important; /* Okunaklı koyu mavi yazı */
+        border: 1px solid #bae6fd !important; /* İnce mavi çerçeve */
+        padding: 0.35em 0.7em !important;
+        font-size: 0.75rem !important;
+        font-weight: 600 !important;
+        border-radius: 6px !important;
+        display: inline-block !important;
+        letter-spacing: 0.03em;
+    }
+
+    .custom-role-none {
+        background-color: #f1f5f9 !important;
+        color: #64748b !important;
+        border: 1px solid #e2e8f0 !important;
+    }
+</style>
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h3 class="fw-bold m-0" style="color: #0f172a;">Kullanıcı Listesi</h3>
+            <p class="text-muted small m-0 mt-1">Sistemde kayıtlı tüm kullanıcıları ve yetkilerini yönetin.</p>
+        </div>
+    </div>
+
+    <div class="corp-table-card">
+        <div class="table-responsive">
+            <table class="table corp-table mb-0">
+                <thead>
+                    <tr>
+                        <th class="text-center" style="width: 50px;">#</th>
+                        <th>Kullanıcı Bilgileri</th>
+                        <th>İletişim</th>
+                        <th>Kullanıcı Adı</th>
+                        <th>Yetki / Rol</th>
+                        <th class="text-end pe-4" style="width: 220px;">İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        @foreach (var item in Model)
+                        {
+                            count++;
+                            <tr>
+                                <td class="text-center fw-bold text-muted">@count</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <img src="@item.ImageUrl" class="user-avatar shadow-sm me-3" alt="User Avatar" onerror="this.src='https://via.placeholder.com/150/e2e8f0/64748b?text=👤'" />
+                                        <div>
+                                            <div class="fw-bold text-dark" style="font-size: 0.95rem;">@item.FirstName @item.LastName</div>
+                                            <div class="small text-muted">Kayıtlı Üye</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="text-dark" style="font-size: 0.9rem;">
+                                        <i class="bi bi-envelope text-muted me-1"></i> @item.Email
+                                    </div>
+                                    <div class="text-muted mt-1" style="font-size: 0.85rem;">
+                                        <i class="bi bi-telephone text-muted me-1"></i> @(string.IsNullOrEmpty(item.PhoneNumber) ? "Belirtilmemiş" : item.PhoneNumber)
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge bg-light text-dark border px-2 py-1" style="font-weight: 500;">@("@")@item.UserName</span>
+                                </td>
+                                <td>
+                                    <div class="d-flex flex-wrap gap-1">
+                                        @if (item.Roles != null && item.Roles.Any())
+                                        {
+                                            @foreach (var role in item.Roles)
+                                            {
+                                                <span class="custom-role-badge">
+                                                    @role
+                                                </span>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <span class="custom-role-badge custom-role-none">
+                                                Rol Yok
+                                            </span>
+                                        }
+                                    </div>
+                                </td>
+                                <td class="text-end pe-4">
+                                    <div class="d-flex justify-content-end gap-2">
+                                        <a href="/Admin/User/AssignRole/@item.Id" class="btn btn-sm btn-light border shadow-sm fw-medium text-dark transition-all">
+                                            <i class="bi bi-shield-lock me-1 text-primary"></i> Rol Ata
+                                        </a>
+                                        <button onclick="deleteUser('@item.Id')" class="btn btn-sm btn-danger shadow-sm fw-medium transition-all">
+                                            <i class="bi bi-trash3"></i> Sil
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="6" class="text-center py-5 text-muted">
+                                <i class="bi bi-people fs-1 d-block mb-2 opacity-50"></i>
+                                Kayıtlı kullanıcı bulunamadı.
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    function deleteUser(id) {
+        Swal.fire({
+            title: "Kullanıcıyı Sil",
+            text: "Bu kullanıcıyı silmek istediğinize emin misiniz? Bu işlem geri alınamaz.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#dc3545",
+            cancelButtonColor: "#f8f9fa",
+            confirmButtonText: "Evet, Kalıcı Olarak Sil",
+            cancelButtonText: "<span style='color:#212529'>Vazgeç</span>",
+            reverseButtons: true,
+            borderRadius: '8px'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: "Silindi!",
+                    text: "Kullanıcı başarılı bir şekilde sistemden kaldırıldı.",
+                    icon: "success",
+                    showConfirmButton: false,
+                    timer: 2000,
+                    timerProgressBar: true
+                }).then(() => {
+                    window.location.href = "/Admin/User/DeleteUser/" + id;
+                });
+            }
+        });
+    }
+</script>

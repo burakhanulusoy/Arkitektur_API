@@ -8,6 +8,7 @@ using Arkitektur.WebUI.Services.ContactService;
 using Arkitektur.WebUI.Services.FeatureServices;
 using Arkitektur.WebUI.Services.FileServices;
 using Arkitektur.WebUI.Services.ProjectServices;
+using Arkitektur.WebUI.Services.UserServices;
 
 namespace Arkitektur.WebUI.Extensions
 {
@@ -68,6 +69,12 @@ namespace Arkitektur.WebUI.Extensions
             });
 
             services.AddHttpClient<IAppointmentService, AppointmentService>(options =>
+            {
+                options.BaseAddress = new Uri(apiOptions.baseUrl);
+
+            });
+
+            services.AddHttpClient<IUserService, UserService>(options =>
             {
                 options.BaseAddress = new Uri(apiOptions.baseUrl);
 

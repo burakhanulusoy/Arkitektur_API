@@ -59,6 +59,7 @@ namespace Arkitektur.Business.Services.RoleAssignServices
 
                 assignRoleList.Add(new AssignRoleDto
                 {
+                    FullName=string.Join(" ",user.FirstName,user.LastName),
                     RoleId = role.Id,
                     UserId = user.Id,
                     RoleName = role.Name,

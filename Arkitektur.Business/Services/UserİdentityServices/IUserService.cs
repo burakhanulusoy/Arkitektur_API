@@ -8,8 +8,8 @@ namespace Arkitektur.Business.Services.UserİdentityServices
     {
 
         Task<BaseResult<object>> CreateUserAsync(CreateUserDto createUserDto);
-
         Task<BaseResult<TokenResponseDto>> LoginUserAsync(LoginUserDto loginUserDto);
+        Task<BaseResult<List<ResultUserDto>>> GetAllUserAsync();
 
     }
 }
