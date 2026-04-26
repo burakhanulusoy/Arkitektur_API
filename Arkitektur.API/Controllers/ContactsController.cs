@@ -1,5 +1,6 @@
 ﻿using Arkitektur.Business.DTOs.ContactDtos;
 using Arkitektur.Business.Services.ContactServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -9,6 +10,7 @@ namespace Arkitektur.API.Controllers
     [ApiController]
     public class ContactsController(IContactService _contactService) : ControllerBase
     {
+        [AllowAnonymous]
 
         [HttpGet]
         public async Task<IActionResult> GetAll()

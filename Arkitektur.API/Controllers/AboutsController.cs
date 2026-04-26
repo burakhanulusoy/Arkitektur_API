@@ -13,7 +13,7 @@ namespace Arkitektur.API.Controllers
     {
         // unutma boyle action resılt kullanıca neler gırılecegı goızkuyor !!!!!!!!!!!!!!!!!!!!!11
 
-
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<List<ResultAboutDto>>> GetAll()
         {

@@ -1,5 +1,7 @@
-﻿using Arkitektur.WebUI.Options;
+﻿using Arkitektur.WebUI.Handlers;
+using Arkitektur.WebUI.Options;
 using Arkitektur.WebUI.Services.MessageService;
+using Arkitektur.WebUI.Services.TokenServices;
 
 namespace Arkitektur.WebUI.Extensions
 {
@@ -14,6 +16,11 @@ namespace Arkitektur.WebUI.Extensions
             services.Configure<ApiOptions>(configuration.GetSection(nameof(ApiOptions)));
 
             services.AddScoped<IMessageService, MessageService>();
+            services.AddScoped<ITokenService, TokenService>();
+
+            services.AddScoped<TokenHandler>();
+
+
 
         }
 

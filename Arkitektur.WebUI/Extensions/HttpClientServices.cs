@@ -1,4 +1,5 @@
-﻿using Arkitektur.WebUI.Options;
+﻿using Arkitektur.WebUI.Handlers;
+using Arkitektur.WebUI.Options;
 using Arkitektur.WebUI.Services.AboutServices;
 using Arkitektur.WebUI.Services.AppointmentServices;
 using Arkitektur.WebUI.Services.BannerServices;
@@ -25,60 +26,61 @@ namespace Arkitektur.WebUI.Extensions
             {
                 options.BaseAddress = new Uri(apiOptions.baseUrl);
 
-            });
+            }).AddHttpMessageHandler<TokenHandler>();
+
             services.AddHttpClient<IProjectService, ProjectService>(options =>
             {
                 options.BaseAddress = new Uri(apiOptions.baseUrl);
 
-            });
+            }).AddHttpMessageHandler<TokenHandler>();
 
             services.AddHttpClient<IFileService, FileService>(options =>
             {
                 options.BaseAddress = new Uri(apiOptions.baseUrl);
 
-            });
+            }).AddHttpMessageHandler<TokenHandler>();
 
             services.AddHttpClient<IAboutService, AboutService>(options =>
             {
                 options.BaseAddress = new Uri(apiOptions.baseUrl);
 
-            });
+            }).AddHttpMessageHandler<TokenHandler>();
 
             services.AddHttpClient<IBannerService, BannerService>(options =>
             {
                 options.BaseAddress = new Uri(apiOptions.baseUrl);
 
-            });
+            }).AddHttpMessageHandler<TokenHandler>();
 
             services.AddHttpClient<IChooseService, ChooseService>(options =>
             {
                 options.BaseAddress = new Uri(apiOptions.baseUrl);
 
-            });
+            }).AddHttpMessageHandler<TokenHandler>();
 
             services.AddHttpClient<IContactService, ContactService>(options =>
             {
                 options.BaseAddress = new Uri(apiOptions.baseUrl);
 
-            });
+            }).AddHttpMessageHandler<TokenHandler>();
 
             services.AddHttpClient<IFeatureService, FeatureService>(options =>
             {
                 options.BaseAddress = new Uri(apiOptions.baseUrl);
 
-            });
+            }).AddHttpMessageHandler<TokenHandler>();
 
             services.AddHttpClient<IAppointmentService, AppointmentService>(options =>
             {
                 options.BaseAddress = new Uri(apiOptions.baseUrl);
 
-            });
+            }).AddHttpMessageHandler<TokenHandler>();
 
             services.AddHttpClient<IUserService, UserService>(options =>
             {
                 options.BaseAddress = new Uri(apiOptions.baseUrl);
 
-            });
+            }).AddHttpMessageHandler<TokenHandler>();
 
         }
 

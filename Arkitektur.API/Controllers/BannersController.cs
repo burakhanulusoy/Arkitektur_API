@@ -1,5 +1,6 @@
 ﻿using Arkitektur.Business.DTOs.BannerDtos;
 using Arkitektur.Business.Services.BannerServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Arkitektur.API.Controllers
@@ -8,6 +9,7 @@ namespace Arkitektur.API.Controllers
     [ApiController]
     public class BannersController(IBannerService _bannerService) : ControllerBase
     {
+        [AllowAnonymous]
 
         [HttpGet]
         public async Task<IActionResult> GetAll()

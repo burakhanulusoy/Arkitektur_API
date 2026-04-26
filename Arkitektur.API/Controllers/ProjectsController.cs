@@ -1,5 +1,6 @@
 ﻿using Arkitektur.Business.DTOs.ProjectDtos;
 using Arkitektur.Business.Services.ProjectServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Arkitektur.API.Controllers
@@ -8,6 +9,7 @@ namespace Arkitektur.API.Controllers
     [ApiController]
     public class ProjectsController(IProjectService _projectService) : ControllerBase
     {
+        [AllowAnonymous]
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
@@ -16,6 +18,7 @@ namespace Arkitektur.API.Controllers
 
             return response.IsSuccessful ? Ok(response) : BadRequest(response);
         }
+        [AllowAnonymous]
 
         [HttpGet("WithCategories")]
         public async Task<IActionResult> GetProjectWithCategory()
@@ -25,6 +28,7 @@ namespace Arkitektur.API.Controllers
             return response.IsSuccessful ? Ok(response) : BadRequest(response);
         }
 
+        [AllowAnonymous]
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)

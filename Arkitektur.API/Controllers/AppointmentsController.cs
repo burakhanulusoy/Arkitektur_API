@@ -1,4 +1,5 @@
 ﻿using Arkitektur.Business.Services.AppointmentServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Arkitektur.API.Controllers
@@ -29,6 +30,7 @@ namespace Arkitektur.API.Controllers
 
         }
 
+        [AllowAnonymous]
 
         [HttpPost]
         public async Task<IActionResult>  Create(CreateAppointmentDto createAppointmentDto)
