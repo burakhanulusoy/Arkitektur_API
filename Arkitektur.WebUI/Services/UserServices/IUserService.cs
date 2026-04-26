@@ -1,4 +1,5 @@
 ﻿using Arkitektur.WebUI.Base;
+using Arkitektur.WebUI.DTOs.JwtTokenDtos;
 using Arkitektur.WebUI.DTOs.UserDtos;
 
 namespace Arkitektur.WebUI.Services.UserServices
@@ -10,6 +11,8 @@ namespace Arkitektur.WebUI.Services.UserServices
         Task<BaseResult<List<AssignRoleDto>>> GetUserForeRoleAssignAsync(int id);
 
         Task<BaseResult<object>> AssignRoleAsync(List<AssignRoleDto> assignRoleDtos);
+
+        Task<BaseResult<TokenResponseDto>> LoginAsync(LoginUserDto userDto);
 
 
     }

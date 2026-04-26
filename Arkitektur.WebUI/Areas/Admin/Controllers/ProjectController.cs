@@ -2,6 +2,7 @@
 using Arkitektur.WebUI.Exceptions;
 using Arkitektur.WebUI.Services.CategoryServices;
 using Arkitektur.WebUI.Services.ProjectServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -10,6 +11,8 @@ using System.Threading.Tasks;
 namespace Arkitektur.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
+
     public class ProjectController(IProjectService _projectService,ICategoryService _categoryService) : Controller
     {
 

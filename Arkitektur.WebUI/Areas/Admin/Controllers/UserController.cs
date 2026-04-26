@@ -1,9 +1,12 @@
 ﻿using Arkitektur.WebUI.DTOs.UserDtos;
 using Arkitektur.WebUI.Services.UserServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Arkitektur.WebUI.Areas.Admin.Controllers
 {
+    [Authorize]
+
     [Area("Admin")]
     public class UserController(IUserService _userService) : Controller
     {

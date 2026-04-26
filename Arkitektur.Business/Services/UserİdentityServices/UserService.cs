@@ -77,14 +77,14 @@ namespace Arkitektur.Business.Services.UserİdentityServices
 
             if (user is null)
             {
-                return BaseResult<TokenResponseDto>.Fail("User Not Found");
+                return BaseResult<TokenResponseDto>.Fail("Kullanıcı kaydı bulunamadı");
             }
 
             var result = await _signInManager.PasswordSignInAsync(user, loginUserDto.Password, true, true);
 
             if (!result.Succeeded)
             {
-                return BaseResult<TokenResponseDto>.Fail("Password or email is incorrect");
+                return BaseResult<TokenResponseDto>.Fail("Şifre veya email adresiniz hatalı");
             }
 
             var tokenResponse = await _jwtService.GenerateTokenAsync(user);

@@ -1,5 +1,6 @@
 using Arkitektur.WebUI.Extensions;
 using Arkitektur.WebUI.Filters;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,22 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddHttpClientService(builder.Configuration);
 
 builder.Services.AddServiceRegistrations(builder.Configuration);
+
+builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddCookie(JwtBearerDefaults.AuthenticationScheme, options =>
+                {
+                    options.LoginPath = "/Auth/Login";
+                    options.LogoutPath = "/Auth/Logout";
+                    options.AccessDeniedPath = "/Auth/AccessDeniedPage";
+                    options.Cookie.SameSite = SameSiteMode.Strict;
+                    options.Cookie.HttpOnly = true;
+                    options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+                    options.Cookie.Name = "Arlitektur.com";
+
+
+                }); 
 
 
 builder.Services.AddControllersWithViews(options =>
@@ -31,6 +48,9 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseRouting();
+
+app.UseAuthentication();
+
 
 app.UseAuthorization();
 

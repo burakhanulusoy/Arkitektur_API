@@ -1,9 +1,11 @@
 ﻿using Arkitektur.WebUI.Services.AppointmentServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Arkitektur.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
     public class AppointmentController(IAppointmentService _appointmentService) : Controller
     {
 

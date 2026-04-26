@@ -1,10 +1,13 @@
 ﻿using Arkitektur.WebUI.DTOs.FeatureDtos;
 using Arkitektur.WebUI.Services.FeatureServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Arkitektur.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
+
     public class FeatureController(IFeatureService _featureService) : Controller
     {
 
