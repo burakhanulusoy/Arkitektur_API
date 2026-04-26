@@ -1,6 +1,7 @@
 ﻿using Arkitektur.WebUI.DTOs.UserDtos;
 using Arkitektur.WebUI.Services.UserServices;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace Arkitektur.WebUI.Controllers
 {
@@ -18,6 +19,21 @@ namespace Arkitektur.WebUI.Controllers
             return RedirectToAction("Index", "About", new { Area = "Admin" });
 
         }
+
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Register(CreateUserDto createUserDto)
+        {
+            await _userService.CreateUserAsync(createUserDto);
+            return RedirectToAction(nameof(Login));
+
+
+        }
+
 
     }
 }

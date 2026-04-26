@@ -14,6 +14,8 @@ namespace Arkitektur.WebUI.Services.UserServices
 
         Task<BaseResult<TokenResponseDto>> LoginAsync(LoginUserDto userDto);
 
+        Task<BaseResult<object>> CreateUserAsync(CreateUserDto createUserDto);
+
 
     }
 }

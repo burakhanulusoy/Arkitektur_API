@@ -23,6 +23,16 @@ namespace Arkitektur.WebUI.Services.UserServices
 
         }
 
+        public async Task<BaseResult<object>> CreateUserAsync(CreateUserDto createUserDto)
+        {
+            var response = await _client.PostAsJsonAsync("users/register", createUserDto);
+
+            var result = await response.Content.ReadFromJsonAsync<BaseResult<object>>();
+
+            return result.IsFailure ? throw new ApiValidationException(result.Errors) : result;
+
+        }
+
         public async Task<BaseResult<List<ResultUserDto>>> GetAllUserAsync()
         {
             return await _client.GetFromJsonAsync<BaseResult<List<ResultUserDto>>>("users");
