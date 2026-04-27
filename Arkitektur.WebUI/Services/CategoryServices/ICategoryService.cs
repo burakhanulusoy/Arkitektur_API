@@ -11,6 +11,7 @@ namespace Arkitektur.WebUI.Services.CategoryServices
         Task<BaseResult<object>> DeleteAsync(int id);
         Task<BaseResult<object>> CreateAsync(CreateCategoryDto createCategoryDto);
         Task<BaseResult<object>> UpdateAsync(UpdateCategoryDto updateCategoryDto);
+        Task<BaseResult<List<ResultCategoriesWithProjectsDto>>> GetCategoriesWithProjectsAsync();
 
 
     }

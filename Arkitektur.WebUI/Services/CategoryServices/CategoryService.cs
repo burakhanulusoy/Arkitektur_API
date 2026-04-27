@@ -47,6 +47,11 @@ namespace Arkitektur.WebUI.Services.CategoryServices
 
         }
 
+        public async Task<BaseResult<List<ResultCategoriesWithProjectsDto>>> GetCategoriesWithProjectsAsync()
+        {
+           return await _client.GetFromJsonAsync<BaseResult<List<ResultCategoriesWithProjectsDto>>>("categories/WithProjects");
+        }
+
         public async Task<BaseResult<object>> UpdateAsync(UpdateCategoryDto updateCategoryDto)
         {
                                              
