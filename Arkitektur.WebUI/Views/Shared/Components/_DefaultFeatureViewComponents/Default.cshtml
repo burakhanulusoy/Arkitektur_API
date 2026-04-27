@@ -1,0 +1,88 @@
+﻿@model List<ResultFeatureDto>
+@*
+    özellikler (hizmetler) view bileşeni
+*@
+
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+            <h4 class="section-title">Hizmetlerimiz</h4>
+            <h1 class="display-5 mb-4">Modern Mimari ve İç Mekan Tasarımına Odaklanıyoruz</h1>
+        </div>
+        <div class="row g-4">
+
+            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="service-item d-flex position-relative text-center h-100">
+                    <img class="bg-img" src="@Model[0].BacgroundImage" alt="Mimari Tasarım">
+                    <div class="service-text p-5">
+                        <img class="mb-4" src="~/arkitektur-1.0.0/img/icons/icon-5.png" alt="İkon">
+                        <h3 class="mb-3">@Model[0].Title</h3>
+                        <p class="mb-4">@Model[0].Description</p>
+                        <a class="btn" href=""><i class="fa fa-plus text-primary me-3"></i>Daha Fazla</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="service-item d-flex position-relative text-center h-100">
+                    <img class="bg-img" src="@Model[1].BacgroundImage" alt="3D Modelleme">
+                    <div class="service-text p-5">
+                        <img class="mb-4" src="~/arkitektur-1.0.0/img/icons/icon-6.png" alt="İkon">
+                        <h3 class="mb-3">@Model[1].Title</h3>
+                        <p class="mb-4">@Model[1].Description</p>
+                        <a class="btn" href=""><i class="fa fa-plus text-primary me-3"></i>Daha Fazla</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                <div class="service-item d-flex position-relative text-center h-100">
+                    <img class="bg-img" src="@Model[2].BacgroundImage" alt="Alan Planlaması">
+                    <div class="service-text p-5">
+                        <img class="mb-4" src="~/arkitektur-1.0.0/img/icons/icon-7.png" alt="İkon">
+                        <h3 class="mb-3">@Model[2].Title</h3>
+                        <p class="mb-4">@Model[2].Description</p>
+                        <a class="btn" href=""><i class="fa fa-plus text-primary me-3"></i>Daha Fazla</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="service-item d-flex position-relative text-center h-100">
+                    <img class="bg-img" src="@Model[3].BacgroundImage" alt="İç Mekan Tasarımı">
+                    <div class="service-text p-5">
+                        <img class="mb-4" src="~/arkitektur-1.0.0/img/icons/icon-8.png" alt="İkon">
+                        <h3 class="mb-3">@Model[3].Title</h3>
+                        <p class="mb-4">@Model[3].Description</p>
+                        <a class="btn" href=""><i class="fa fa-plus text-primary me-3"></i>Daha Fazla</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="service-item d-flex position-relative text-center h-100">
+                    <img class="bg-img" src="@Model[4].BacgroundImage" alt="Restorasyon">
+                    <div class="service-text p-5">
+                        <img class="mb-4" src="~/arkitektur-1.0.0/img/icons/icon-9.png" alt="İkon">
+                        <h3 class="mb-3">@Model[4].Title</h3>
+                        <p class="mb-4">@Model[4].Description</p>
+                        <a class="btn" href=""><i class="fa fa-plus text-primary me-3"></i>Daha Fazla</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                <div class="service-item d-flex position-relative text-center h-100">
+                    <img class="bg-img" src="@Model[5].BacgroundImage" alt="İnşaat">
+                    <div class="service-text p-5">
+                        <img class="mb-4" src="~/arkitektur-1.0.0/img/icons/icon-10.png" alt="İkon">
+                        <h3 class="mb-3">@Model[5].Title</h3>
+                        <p class="mb-4">@Model[5].Description</p>
+                        <a class="btn" href=""><i class="fa fa-plus text-primary me-3"></i>Daha Fazla</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

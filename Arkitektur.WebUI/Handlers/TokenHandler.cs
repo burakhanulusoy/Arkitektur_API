@@ -7,7 +7,7 @@ namespace Arkitektur.WebUI.Handlers
 {
     public class TokenHandler(IHttpContextAccessor _httpContextAccessor,ITokenService _tokenService) :DelegatingHandler
     {
-
+        //yapma amacım apiye tokenı gonderıırz
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
 
