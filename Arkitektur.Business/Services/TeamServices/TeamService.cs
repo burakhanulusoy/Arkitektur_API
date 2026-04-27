@@ -6,6 +6,7 @@ using Arkitektur.Entity.Entities;
 using FluentValidation;
 using Mapster;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.EntityFrameworkCore;
 
 namespace Arkitektur.Business.Services.TeamServices
 {
@@ -54,7 +55,7 @@ namespace Arkitektur.Business.Services.TeamServices
 
         public async Task<BaseResult<List<ResultTeamDto>>> GetAllAsync()
         {
-            var teams = await _teamRepository.GetAllAsync();
+            var teams = await _teamRepository.GetQueryable().Include(x=>x.TeamSocials).AsNoTracking().ToListAsync();
 
             var mappedTeams = teams.Adapt<List<ResultTeamDto>>();
 
@@ -65,7 +66,7 @@ namespace Arkitektur.Business.Services.TeamServices
         public async Task<BaseResult<ResultTeamDto>> GetByIdAsync(int id)
         {
 
-            var team = await _teamRepository.GetByIdAsync(id);
+            var team = await _teamRepository.GetQueryable().Include(x=>x.TeamSocials).AsNoTracking().Where(x=>x.Id==id).FirstOrDefaultAsync();
 
             if(team is null)
             {
