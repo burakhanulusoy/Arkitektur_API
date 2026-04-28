@@ -1,0 +1,37 @@
+﻿@model CreateTestimonialDto
+@{
+    ViewData["Title"] = "Yeni Yorumlar Ekle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<form enctype="multipart/form-data" method="post">
+
+    <div class="form-group mb-3">
+        <label class="form-label fw-bold">Adı ve Soyadı</label>
+        <input type="text" placeholder="Ad ve soyad giriniz..." asp-for="NameSurname" class="form-control" />
+        <span class="text-danger" asp-validation-for="NameSurname"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label class="form-label fw-bold">Unvan</label>
+        <input type="text" placeholder="Kişinin unvanını giriniz (Örn: Yazılım Mühendisi)..." asp-for="Title" class="form-control" />
+        <span class="text-danger" asp-validation-for="Title"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label class="form-label fw-bold">Yorumu</label>
+        <textarea placeholder="Referans veya müşteri yorumunu yazınız..." asp-for="Comment" class="form-control" rows="4"></textarea>
+        <span class="text-danger" asp-validation-for="Comment"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label class="form-label fw-bold">Görsel Seçin</label>
+        <input type="file" name="file" class="form-control" accept="image/*" required />
+        <small class="text-muted">Lütfen sadece resim dosyaları yükleyiniz.</small>
+    </div>
+
+    <button type="submit" class="btn btn-success mt-2">
+        <i class="bi bi-check-circle me-1"></i> Oluştur
+    </button>
+
+</form>

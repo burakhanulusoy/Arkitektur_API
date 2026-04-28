@@ -2,8 +2,6 @@ using Amazon.Runtime;
 using Amazon.S3;
 using Arkitektur.Business.Assemblies;
 using Arkitektur.Business.Options;
-using Arkitektur.Business.Services.AboutServices;
-using Arkitektur.Business.Services.AppointmentServices;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;

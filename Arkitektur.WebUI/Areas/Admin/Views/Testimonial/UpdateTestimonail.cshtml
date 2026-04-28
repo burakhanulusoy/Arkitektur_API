@@ -1,0 +1,40 @@
+﻿@model UpdateTestimonialDto
+@{
+    ViewData["Title"] = "Yorumlar Güncelle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<form enctype="multipart/form-data" method="post">
+
+    <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="ImageUrl" />
+
+    <div class="form-group mb-3">
+        <label class="form-label fw-bold">Adı ve Soyadı</label>
+        <input type="text" placeholder="Ad ve soyad giriniz..." asp-for="NameSurname" class="form-control" />
+        <span class="text-danger" asp-validation-for="NameSurname"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label class="form-label fw-bold">Unvan</label>
+        <input type="text" placeholder="Kişinin unvanını giriniz (Örn: Yazılım Mühendisi)..." asp-for="Title" class="form-control" />
+        <span class="text-danger" asp-validation-for="Title"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label class="form-label fw-bold">Yorumu</label>
+        <textarea placeholder="Referans veya müşteri yorumunu yazınız..." asp-for="Comment" class="form-control" rows="4"></textarea>
+        <span class="text-danger" asp-validation-for="Comment"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label class="form-label fw-bold">Görsel Seçin (Değiştirmek İstemiyorsanız Boş Bırakın)</label>
+        <input type="file" name="file" class="form-control" accept="image/*" />
+        <small class="text-muted">Yeni bir görsel yüklemezseniz, mevcut görsel kullanılmaya devam edecektir.</small>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-2">
+        <i class="bi bi-arrow-clockwise me-1"></i> Güncelle
+    </button>
+
+</form>
