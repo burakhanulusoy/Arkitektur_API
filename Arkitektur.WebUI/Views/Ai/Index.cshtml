@@ -1,0 +1,91 @@
+﻿@{
+    ViewData["Title"] = "Uhud AI - Hayalden Render'a";
+    // Layout dosyanın yolunu kendi projene göre düzenleyebilirsin
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s">
+    <div class="container py-5">
+        <h1 class="display-1 text-white animated slideInDown">Uhud AI Mimar</h1>
+    </div>
+</div>
+
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+            <h4 class="section-title">Yapay Zeka Tasarım</h4>
+            <h1 class="display-5 mb-4">Arsanızı Yükleyin, Hayalinizi Anlatın</h1>
+        </div>
+
+        <div class="row g-5">
+            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="bg-light p-5 h-100 d-flex flex-column justify-content-center">
+
+                    @if (ViewBag.Error != null)
+                    {
+                        <div class="alert alert-danger">@ViewBag.Error</div>
+                    }
+
+                    <form method="post" enctype="multipart/form-data" asp-controller="Ai" asp-action="Index" id="aiForm">
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <label class="form-label fw-bold">Arsa / Arazi Fotoğrafı</label>
+                                <input type="file" name="plotImage" class="form-control bg-white" style="height: 55px;" accept="image/*" required>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-bold">Nasıl Bir Yapı İstiyorsunuz?</label>
+                                <textarea name="userPrompt" class="form-control bg-white" rows="5" placeholder="Örn: 2 katlı, geniş pencereli, ahşap detaylı modern bir İskandinav villası..." required></textarea>
+                            </div>
+                            <div class="col-12 mt-4">
+                                <button class="btn btn-primary w-100 py-3" type="submit" id="submitBtn">
+                                    <span id="btnText">Yapay Zeka İle Tasarla</span>
+                                    <span id="btnSpinner" class="spinner-border spinner-border-sm d-none ms-2" role="status" aria-hidden="true"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
+
+                @if (ViewBag.GeneratedImageUrl != null)
+                {
+                    <div class="card border-0 shadow h-100">
+                        <img src="@ViewBag.GeneratedImageUrl" class="card-img-top" alt="Uhud AI Generated Architecture" style="object-fit: cover; max-height: 450px;">
+                        <div class="card-body p-4 bg-light">
+                            <h5 class="card-title text-primary mb-3">Uhud AI Render Sonucu</h5>
+                            <p class="card-text fw-bold mb-1">Gemini 3.1 Pro Arazi Analizi:</p>
+                            <p class="card-text text-muted fst-italic small">@ViewBag.Analysis</p>
+                            <a href="@ViewBag.GeneratedImageUrl" target="_blank" class="btn btn-outline-primary mt-3 w-100">Görseli Tam Boyutta İncele</a>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="h-100 d-flex align-items-center justify-content-center bg-light" style="min-height: 450px; border: 2px dashed #adb5bd;">
+                        <div class="text-center text-muted p-4">
+                            <i class="fa fa-image fa-4x mb-3 text-secondary"></i>
+                            <h5 class="text-secondary">Sonuç Burada Görüntülenecek</h5>
+                            <p class="mb-0">Tasarımınız hazır olduğunda bu alanda belirecektir.<br><small>(İşlem yoğunluğa bağlı olarak 15-30 saniye sürebilir)</small></p>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('aiForm').addEventListener('submit', function () {
+        var btnText = document.getElementById('btnText');
+        var btnSpinner = document.getElementById('btnSpinner');
+        var submitBtn = document.getElementById('submitBtn');
+
+        // Metni değiştir, spineri göster, butonu kilitle ki adam 2 kere basamasın
+        btnText.innerHTML = 'Çizim Yapılıyor (Lütfen Bekleyin)...';
+        btnSpinner.classList.remove('d-none');
+        submitBtn.disabled = true;
+    });
+</script>
