@@ -26,7 +26,7 @@ namespace Arkitektur.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> Index()
         {
 
-            var teamSocialWithTeamMember = await _teamSocialService.GetTeamSocialWithTeamMemberListAsync();
+            var teamSocialWithTeamMember = await _teamService.GetAllAsync();
             return View(teamSocialWithTeamMember.Data);
           
         }

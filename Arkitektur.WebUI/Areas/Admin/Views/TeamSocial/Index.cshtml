@@ -1,4 +1,4 @@
-﻿@model List<GetTeamSocialWithTeamMemberDto>
+﻿@model List<ResultTeamDto>
 
 @{
     ViewData["Title"] = "Sosyal Medya Hesapları";
@@ -29,30 +29,42 @@
                 <tbody>
                     @foreach (var item in Model)
                     {
-                        count++;
-                        <tr>
-                            <td class="py-3"><strong>@count</strong></td>
-                            <td class="py-3 text-center">
-                                <img src="@item.Icon" alt="@item.Title İkonu" class="img-thumbnail shadow-sm" style="width: 50px; height: 50px; object-fit: contain; background-color: #f8f9fa;" />
-                            </td>
-                            <td class="py-3 fs-6 fw-semibold">@item.Title</td>
-                            <td class="py-3">
-                                <span class="badge bg-secondary fs-6 px-3 py-2">@item.Team.NameSurname</span>
-                            </td>
-                            <td class="py-3 text-center">
-                                <a target="_blank" class="btn btn-outline-dark btn-sm px-3" href="@item.Url">
-                                    <i class="bi bi-box-arrow-up-right me-1"></i> Git
-                                </a>
-                            </td>
-                            <td class="text-center py-3">
-                                <a href="/Admin/TeamSocial/UpdateTeamSocial/@item.Id" class="btn btn-primary px-3">
-                                    <i class="bi bi-pencil-square"></i> Düzenle
-                                </a>
-                                <button onclick="deleteTeamSocial(@item.Id)" class="btn btn-danger px-3">
-                                    <i class="bi bi-trash"></i> Sil
-                                </button>
-                            </td>
-                        </tr>
+                        // Eğer kişinin sosyal medyası yoksa boş yere dönmesin diye ufak bir güvenlik kontrolü
+                        if (item.TeamSocials != null && item.TeamSocials.Any())
+                        {
+                            @foreach (var socialMedia in item.TeamSocials)
+                            {
+                                count++;
+                                <tr>
+                                    <td class="py-3"><strong>@count</strong></td>
+
+                                    <td class="py-3 text-center">
+                                        <img src="@socialMedia.Icon" alt="@socialMedia.Title İkonu" class="img-thumbnail shadow-sm" style="width: 50px; height: 50px; object-fit: contain; background-color: #f8f9fa;" />
+                                    </td>
+
+                                    <td class="py-3 fs-6 fw-semibold">@socialMedia.Title</td>
+
+                                    <td class="py-3">
+                                        <span class="badge bg-secondary fs-6 px-3 py-2">@item.NameSurname</span>
+                                    </td>
+
+                                    <td class="py-3 text-center">
+                                        <a target="_blank" class="btn btn-outline-dark btn-sm px-3" href="@socialMedia.Url">
+                                            <i class="bi bi-box-arrow-up-right me-1"></i> Git
+                                        </a>
+                                    </td>
+
+                                    <td class="text-center py-3">
+                                        <a href="/Admin/TeamSocial/UpdateTeamSocial/@socialMedia.Id" class="btn btn-primary px-3">
+                                            <i class="bi bi-pencil-square"></i> Düzenle
+                                        </a>
+                                        <button onclick="deleteTeamSocial(@socialMedia.Id)" class="btn btn-danger px-3">
+                                            <i class="bi bi-trash"></i> Sil
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        }
                     }
                 </tbody>
             </table>
@@ -74,16 +86,14 @@
         }).then((result) => {
             if (result.isConfirmed) {
 
-                // Başarı mesajını ayarla ve bitmesini bekle
                 Swal.fire({
                     title: "Silindi!",
                     text: "Öğeniz başarılı bir şekilde silindi.",
                     icon: "success",
-                    showConfirmButton: false, // Onay butonunu gizle
-                    timer: 2000, // Ekranda 2 saniye (2000ms) kalsın
-                    timerProgressBar: true // Şık bir geri sayım barı ekle
+                    showConfirmButton: false,
+                    timer: 2000,
+                    timerProgressBar: true
                 }).then(() => {
-                    // Alert süresi dolup kapandıktan SONRA yönlendirmeyi yap
                     window.location.href = "/Admin/TeamSocial/DeleteTeamSocial/" + id;
                 });
 
