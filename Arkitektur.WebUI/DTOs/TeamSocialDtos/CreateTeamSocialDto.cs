@@ -1,6 +1,4 @@
-using Arkitektur.Business.DTOs.TeamDtos;
-
-namespace Arkitektur.Business.DTOs.TeamSocialDtos
+﻿namespace Arkitektur.WebUI.DTOs.TeamSocialDtos
 {
     public class CreateTeamSocialDto
     {
@@ -8,6 +6,6 @@ namespace Arkitektur.Business.DTOs.TeamSocialDtos
         public string? Icon { get; set; }
         public string? Url { get; set; }
 
-        public int  TeamId { get; set; }
+        public int TeamId { get; set; }
     }
 }

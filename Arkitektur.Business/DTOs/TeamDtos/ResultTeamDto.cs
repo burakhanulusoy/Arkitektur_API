@@ -1,4 +1,5 @@
 using Arkitektur.Business.Base;
+using Arkitektur.Business.DTOs.TeamSocialDtos;
 using Arkitektur.Entity.Entities;
 
 namespace Arkitektur.Business.DTOs.TeamDtos
@@ -10,7 +11,7 @@ namespace Arkitektur.Business.DTOs.TeamDtos
         public string Title { get; set; }  //iþi
 
 
-        public IList<TeamSocial> TeamSocials { get; set; }
+        public IList<ResultTeamSocialDto> TeamSocials { get; set; }
 
     }
 }

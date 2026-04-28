@@ -7,6 +7,7 @@ using Arkitektur.DataAccess.UOW;
 using Arkitektur.Entity.Entities;
 using FluentValidation;
 using Mapster;
+using Microsoft.EntityFrameworkCore;
 
 namespace Arkitektur.Business.Services.TeamSocialServices
 {
@@ -70,6 +71,29 @@ namespace Arkitektur.Business.Services.TeamSocialServices
             var mappedTeam = team.Adapt<ResultTeamSocialDto>();
 
             return BaseResult<ResultTeamSocialDto>.Success(mappedTeam);
+        }
+
+        public async Task<BaseResult<GetTeamSocialWithTeamMemberDto>> GetByIdTeamSocialWithTeamMemberAsync(int id)
+        {
+            var team = await _teamSocialRepository.GetQueryable().Include(x=>x.Team).Where(x=>x.Id==id).FirstOrDefaultAsync();
+
+            if (team is null)
+            {
+                return BaseResult<GetTeamSocialWithTeamMemberDto>.Fail("User Not Found");
+            }
+
+            var mappedTeam = team.Adapt<GetTeamSocialWithTeamMemberDto>();
+
+            return BaseResult<GetTeamSocialWithTeamMemberDto>.Success(mappedTeam);
+        }
+
+        public async Task<BaseResult<List<GetTeamSocialWithTeamMemberDto>>> GetTeamSocialWithTeamMemberAsync()
+        {
+            var teams = await _teamSocialRepository.GetQueryable().Include(x=>x.Team).ToListAsync();
+
+            var mappedTeams = teams.Adapt<List<GetTeamSocialWithTeamMemberDto>>();
+
+            return BaseResult<List<GetTeamSocialWithTeamMemberDto>>.Success(mappedTeams);
         }
 
         public async Task<BaseResult<object>> UpdateAsync(UpdateTeamSocialDto updateDto)

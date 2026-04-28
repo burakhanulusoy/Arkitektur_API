@@ -53,6 +53,9 @@ namespace Arkitektur.Business.Services.TeamServices
             return result ? BaseResult<object>.Success(team) : BaseResult<object>.Fail("Deleted failed.");
         }
 
+
+
+        //get teams wirth socýalmedýas
         public async Task<BaseResult<List<ResultTeamDto>>> GetAllAsync()
         {
             var teams = await _teamRepository.GetQueryable().Include(x=>x.TeamSocials).AsNoTracking().ToListAsync();

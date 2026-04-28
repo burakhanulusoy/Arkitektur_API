@@ -1,0 +1,85 @@
+﻿@model List<ResultTeamDto>
+
+@{
+    ViewData["Title"] = "Takım Üyeleri";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    int count = 0;
+}
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3 d-flex justify-content-between align-items-center">
+        <h5 class="mb-0 fw-bold">Takımımız</h5>
+        <a class="btn btn-success" href="/Admin/Team/CreateTeam">
+            <i class="bi bi-plus-circle me-1"></i> Yeni Takım Üyesi Ekle
+        </a>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover table-striped align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th scope="col" style="width: 5%;" class="py-3 fs-6">#</th>
+                        <th scope="col" style="width: 15%;" class="py-3 fs-6">Görsel</th>
+                        <th scope="col" style="width: 30%;" class="py-3 fs-6">Ad Soyad</th>
+                        <th scope="col" style="width: 30%;" class="py-3 fs-6">Mesleği / Ünvanı</th>
+                        <th scope="col" style="width: 20%;" class="text-center py-3 fs-6">İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        count++;
+                        <tr>
+                            <td class="py-3"><strong>@count</strong></td>
+                            <td class="py-3">
+                                <img src="@item.ImageUrl" alt="@item.NameSurname görseli" class="img-thumbnail rounded-circle shadow-sm" style="width: 80px; height: 80px; object-fit: cover;" />
+                            </td>
+                            <td class="py-3 fs-6 fw-semibold">@item.NameSurname</td>
+                            <td class="py-3"><span class="badge bg-secondary fs-6 py-2 px-3">@item.Title</span></td>
+                            <td class="text-center py-3">
+                                <a href="/Admin/Team/UpdateTeam/@item.Id" class="btn btn-primary px-3">
+                                    <i class="bi bi-pencil-square"></i> Düzenle
+                                </a>
+                                <button onclick="deleteTeam(@item.Id)" class="btn btn-danger px-3">
+                                    <i class="bi bi-trash"></i> Sil
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    function deleteTeam(id) {
+        Swal.fire({
+            title: "Silmek istediğinize emin misiniz?",
+            text: "Bu işlemi geri alamazsınız!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Evet, sil!",
+            cancelButtonText: "İptal"
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                // Başarı mesajını ayarla ve bitmesini bekle
+                Swal.fire({
+                    title: "Silindi!",
+                    text: "Öğeniz başarılı bir şekilde silindi.",
+                    icon: "success",
+                    showConfirmButton: false, // Onay butonunu gizle
+                    timer: 2000, // Ekranda 2 saniye (2000ms) kalsın
+                    timerProgressBar: true // Şık bir geri sayım barı ekle
+                }).then(() => {
+                    // Alert süresi dolup kapandıktan SONRA yönlendirmeyi yap
+                    window.location.href = "/Admin/Team/DeleteTeam/" + id;
+                });
+
+            }
+        });
+    }
+</script>

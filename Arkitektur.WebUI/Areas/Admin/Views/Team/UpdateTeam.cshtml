@@ -1,0 +1,47 @@
+﻿@model UpdateTeamDto
+@{
+    ViewData["Title"] = "Takım Üyesini Güncelle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card shadow-sm mb-4">
+    <div class="card-header">
+        <h5 class="mb-0">Takım Üyesini Güncelle</h5>
+    </div>
+    <div class="card-body">
+        <form enctype="multipart/form-data" method="post">
+
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="ImageUrl" />
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Takım Üyesi Adı ve Soyadı</label>
+                <input type="text" placeholder="Örn: Ahmet Yılmaz" asp-for="NameSurname" class="form-control" />
+                <span class="text-danger" asp-validation-for="NameSurname"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Mesleği / Ünvanı</label>
+                <input type="text" placeholder="Örn: Mimari Tasarımcı" asp-for="Title" class="form-control" />
+                <span class="text-danger" asp-validation-for="Title"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Yeni Görsel Seçin (İsteğe Bağlı)</label>
+                <input type="file" asp-for="file" class="form-control" accept="image/*" />
+                <span class="text-danger" asp-validation-for="file"></span>
+                <div class="form-text text-muted">Mevcut görseli değiştirmek istemiyorsanız burayı boş bırakabilirsiniz.</div>
+            </div>
+
+            <div class="d-flex justify-content-end mt-4">
+                <a href="/Admin/Team/Index" class="btn btn-secondary me-2">
+                    <i class="bi bi-x-circle me-1"></i> İptal
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-save me-1"></i> Güncelle
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>

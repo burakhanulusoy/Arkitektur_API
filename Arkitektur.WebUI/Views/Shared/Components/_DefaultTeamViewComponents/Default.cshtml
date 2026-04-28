@@ -1,0 +1,42 @@
+﻿@model List<ResultTeamDto>
+
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+            <h4 class="section-title">Takım Üyelerimiz</h4>
+            <h1 class="display-5 mb-4">Hayalinizdeki Ev İçin Yaratıcı Mimarlık Ekibimiz</h1>
+        </div>
+        <div class="row g-0 team-items">
+
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                    <div class="team-item position-relative">
+                        <div class="position-relative">
+
+                            <img class="img-fluid" src="@item.ImageUrl" alt="@item.NameSurname">
+
+                            <div class="team-social text-center">
+
+                                @foreach (var teamSocial in item.TeamSocials)
+                                {
+                                    <a class="btn btn-square" href="@teamSocial.Url" target="_blank" title="@teamSocial.Title">
+                                        <img src="@teamSocial.Icon" alt="@teamSocial.Title" style="width: 20px; height: 20px; object-fit: contain; margin: auto;" />
+                                    </a>
+                                }
+
+                            </div>
+                        </div>
+                        <div class="bg-light text-center p-4">
+
+                            <h3 class="mt-2">@item.NameSurname</h3>
+                            <span class="text-primary">@item.Title</span>
+
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>

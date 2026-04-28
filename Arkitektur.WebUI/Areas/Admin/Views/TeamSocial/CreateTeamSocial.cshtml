@@ -1,0 +1,52 @@
+﻿@model CreateTeamSocialDto
+@{
+    ViewData["Title"] = "Yeni Sosyal Medya Ekle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card shadow-sm mb-4">
+    <div class="card-header py-3">
+        <h5 class="mb-0 fw-bold">Yeni Sosyal Medya Hesabı Ekle</h5>
+    </div>
+    <div class="card-body">
+        <form method="post">
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Hesap Sahibi (Takım Üyesi)</label>
+                <select asp-items="@ViewBag.teams" asp-for="TeamId" class="form-select" required>
+                    <option value="">Lütfen Bir Takım Üyesi Seçin...</option>
+                </select>
+                <span class="text-danger" asp-validation-for="TeamId"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Platform Adı</label>
+                <input type="text" placeholder="Örn: Instagram, LinkedIn, Github" asp-for="Title" class="form-control" />
+                <span class="text-danger" asp-validation-for="Title"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Sosyal Medya Bağlantısı (URL)</label>
+                <input type="url" placeholder="Örn: https://instagram.com/kullaniciadi" asp-for="Url" class="form-control" />
+                <span class="text-danger" asp-validation-for="Url"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Platform İkonu (URL)</label>
+                <input type="url" placeholder="Örn: https://ornek.com/ikon.png" asp-for="Icon" class="form-control" />
+                <span class="text-danger" asp-validation-for="Icon"></span>
+                <div class="form-text text-muted">İkon görselinin web adresini (linkini) giriniz.</div>
+            </div>
+
+            <div class="d-flex justify-content-end mt-4">
+                <a href="/Admin/TeamSocial/Index" class="btn btn-secondary me-2">
+                    <i class="bi bi-x-circle me-1"></i> İptal
+                </a>
+                <button type="submit" class="btn btn-success">
+                    <i class="bi bi-check-circle me-1"></i> Kaydet
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>
