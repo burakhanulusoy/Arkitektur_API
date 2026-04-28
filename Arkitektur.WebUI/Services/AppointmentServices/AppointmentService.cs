@@ -58,8 +58,6 @@ namespace Arkitektur.WebUI.Services.AppointmentServices
 
         public async Task<BaseResult<object>> CreateAsync(CreateAppointmentDto createDto)
         {
-            createDto.AppointmentDate = DateTime.Now;
-            createDto.Status = AppointmentStatus.Pending;
 
             var response = await _httpClient.PostAsJsonAsync("appointments", createDto);
 

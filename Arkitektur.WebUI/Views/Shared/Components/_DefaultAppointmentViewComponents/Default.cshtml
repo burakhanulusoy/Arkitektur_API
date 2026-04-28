@@ -1,0 +1,62 @@
+﻿
+@*
+   default appointment
+*@
+
+
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="row g-5">
+            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
+                <h4 class="section-title">Randevu</h4>
+                <h1 class="display-5 mb-4">Hayalinizdeki Projeye Başlamak İçin Randevu Alın</h1>
+                <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet</p>
+
+                @await Component.InvokeAsync("_DefaultContactInfoViewComponenents")
+
+            </div>
+
+            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
+                <form method="post" asp-action="MakeAppointment" asp-controller="Appointment">
+                    <div class="row g-3">
+                        <div class="col-12 col-sm-6">
+                            <input required type="text" name="NameSurname" class="form-control" placeholder="Adınız ve Soyadınız" style="height: 55px;">
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <input required type="email" name="Email" class="form-control" placeholder="E-Posta Adresiniz" style="height: 55px;">
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <input required type="text" name="PhoneNumber" class="form-control" placeholder="Telefon Numaranız" style="height: 55px;">
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <select class="form-select" name="ServiceName" style="height: 55px;" required>
+                                <option disabled selected>Hizmet Seçiniz</option>
+                                <option value="Konut Ve Ofis Mimarisi">Konut Ve Ofis Mimarisi</option>
+                                <option value="Turizm Ve Otel Mimarisi">Turizm Ve Otel Mimarisi</option>
+                                <option value="Karma Kullanımlı Projeler">Karma Kullanımlı Projeler</option>
+                                <option value="Kentsel Tasarım ve Kamu Yapıları">Kentsel Tasarım ve Kamu Yapıları</option>
+                                <option value="Danışmanlık">Danışmanlık</option>
+                                <option value="Diğer Servis Hizmetlerimiz">Diğer Servis Hizmetlerimiz</option>
+                            </select>
+                        </div>
+                        <div class="col-12">
+                            <div class="date" data-target-input="nearest">
+                                <input type="date" name="AppointmentDate"
+                                       class="form-control datetimepicker-input"
+                                       placeholder="Tarih Seçiniz" style="height: 55px;" required>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <textarea class="form-control" name="Message" rows="5" required placeholder="Mesajınız"></textarea>
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-primary w-100 py-3" type="submit">RANDEVU OLUŞTUR</button>
+                        </div>
+                    </div>
+                    <span class="text-danger">@Html.ValidationSummary()</span>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

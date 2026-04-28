@@ -1,0 +1,30 @@
+﻿@model ResultContactDto
+
+@*
+   Default  contact 
+*@
+
+<div class="row g-4">
+    <div class="col-12">
+        <div class="d-flex">
+            <div class="d-flex flex-shrink-0 align-items-center justify-content-center bg-light" style="width: 65px; height: 65px;">
+                <i class="fa fa-2x fa-phone-alt text-primary"></i>
+            </div>
+            <div class="ms-4">
+                <p class="mb-2">Bizim İle İletişime Geçin</p>
+                <h3 class="mb-0">@Model.PhoneNumber</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="d-flex">
+            <div class="d-flex flex-shrink-0 align-items-center justify-content-center bg-light" style="width: 65px; height: 65px;">
+                <i class="fa fa-2x fa-envelope-open text-primary"></i>
+            </div>
+            <div class="ms-4">
+                <p class="mb-2">Mail Adresimiz</p>
+                <h3 class="mb-0">@Model.Email</h3>
+            </div>
+        </div>
+    </div>
+</div>
