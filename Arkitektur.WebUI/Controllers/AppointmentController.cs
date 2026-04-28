@@ -16,6 +16,8 @@ namespace Arkitektur.WebUI.Controllers
         {
             await _appointmentService.CreateAsync(createAppointmentDto);
 
+            TempData["SuccessMessage"] = "Randevu talebiniz başarıyla alındı. En kısa sürede dönüş yapılacaktır.";
+
             return RedirectToAction("Index", "Default");
 
         }
