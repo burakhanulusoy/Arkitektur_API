@@ -21,11 +21,11 @@ namespace Arkitektur.WebUI.Services.MessageService
 
             if (isCancelled)
             {
-                bodyBuilder.TextBody = $"Sayın müşterimiz, şirketimizdeki yoğunluk nedeniyle {date:dd.MM.yyyy HH:mm} tarihindeki randevunuz iptal edilmiştir. Başka bir güne tekrardan randevu almanızı rica ederiz. Anlayışınız için teşekkür ederiz.";
+                bodyBuilder.TextBody = $"Sayın müşterimiz, şirketimizdeki yoğunluk nedeniyle {date:dd.MM.yyyy} tarihindeki randevunuz iptal edilmiştir. Başka bir güne tekrardan randevu almanızı rica ederiz. Anlayışınız için teşekkür ederiz.";
             }
             else
             {
-                bodyBuilder.TextBody = $"Sayın müşterimiz, randevunuz tarafımızca onaylanmıştır. Randevu tarihiniz: {date:dd.MM.yyyy HH:mm}. Sizinle tanışmak ve projelerimizi anlatmak için randevu saatinizde sizi bekliyoruz.";
+                bodyBuilder.TextBody = $"Sayın müşterimiz, randevunuz tarafımızca onaylanmıştır. Randevu tarihiniz: {date:dd.MM.yyyy}. Sizinle tanışmak ve projelerimizi anlatmak için randevu saatinizde sizi bekliyoruz.";
             }
 
             mimeMessage.Body = bodyBuilder.ToMessageBody();

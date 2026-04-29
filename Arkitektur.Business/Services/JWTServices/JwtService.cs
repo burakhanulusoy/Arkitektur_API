@@ -35,6 +35,7 @@ namespace Arkitektur.Business.Services.JWTServices
                 new Claim(JwtRegisteredClaimNames.Sub,appUser.Id.ToString()),
                 new Claim(JwtRegisteredClaimNames.Name,appUser.UserName),
                 new Claim("FullName",string.Join(" ",appUser.FirstName,appUser.LastName)),
+                new Claim("ImageUrl",appUser.ImageUrl),
                 new Claim(JwtRegisteredClaimNames.Email,appUser.Email),
                 new Claim(JwtRegisteredClaimNames.PhoneNumber,appUser.PhoneNumber)
 

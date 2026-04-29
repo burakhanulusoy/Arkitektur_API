@@ -1,14 +1,9 @@
-﻿
-@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+﻿@*
+   admin sidebar
 *@
 
-
-
-<!-- Sidebar -->
 <div class="sidebar" data-background-color="dark">
     <div class="sidebar-logo">
-        <!-- Logo Header -->
         <div class="logo-header" data-background-color="dark">
             <a href="index.html" class="logo">
                 <img src="~/kaiadmin-lite-1.2.0/assets/img/kaiadmin/logo_light.svg"
@@ -28,172 +23,124 @@
                 <i class="gg-more-vertical-alt"></i>
             </button>
         </div>
-        <!-- End Logo Header -->
     </div>
     <div class="sidebar-wrapper scrollbar scrollbar-inner">
         <div class="sidebar-content">
             <ul class="nav nav-secondary">
 
-
                 <li class="nav-item">
-                    <a href="/Admin/Dashboard/Index">
-                        <i class="bi bi-speedometer2"></i>
-                        <p>Dashboard</p>
+                    <a href="/Admin/Dashboard/Index" class="d-flex align-items-center gap-3 py-2">
+                        <i class="bi bi-speedometer2 fs-5"></i>
+                        <p class="mb-0 fw-medium">Dashboard</p>
                     </a>
                 </li>
 
-
-                <li class="nav-section">
+                <li class="nav-section mt-3 mb-2">
                     <span class="sidebar-mini-icon">
                         <i class="fa fa-ellipsis-h"></i>
                     </span>
-                    <h4 class="text-section">Ögelerimiz</h4>
-                </li>
-
-
-
-
-                <li class="nav-item">
-                    <a data-bs-toggle="collapse" href="#base">
-                        <i class="fas fa-layer-group"></i>
-                        <p>Base</p>
-                        <span class="caret"></span>
-                    </a>
-                    <div class="collapse" id="base">
-                        <ul class="nav nav-collapse">
-                            <li>
-                                <a href="components/avatars.html">
-                                    <span class="sub-item">Avatars</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="components/buttons.html">
-                                    <span class="sub-item">Buttons</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="components/gridsystem.html">
-                                    <span class="sub-item">Grid System</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="components/panels.html">
-                                    <span class="sub-item">Panels</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="components/notifications.html">
-                                    <span class="sub-item">Notifications</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="components/sweetalert.html">
-                                    <span class="sub-item">Sweet Alert</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="components/font-awesome-icons.html">
-                                    <span class="sub-item">Font Awesome Icons</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="components/simple-line-icons.html">
-                                    <span class="sub-item">Simple Line Icons</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="components/typography.html">
-                                    <span class="sub-item">Typography</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                    <h4 class="text-section text-uppercase fw-bold" style="letter-spacing: 1px; font-size: 11px;">Sistem Yönetimi</h4>
                 </li>
 
                 <li class="nav-item">
-                    <a href="/Admin/Category/Index">
-                        <i class="bi bi-collection"></i>
-                        <p>Kategoriler</p>
+                    <a href="/Admin/Category/Index" class="d-flex align-items-center gap-3 py-2">
+                        <i class="bi bi-collection fs-5"></i>
+                        <p class="mb-0">Kategoriler</p>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="/Admin/Project/Index">
-                        <i class="bi bi-briefcase"></i>
-                        <p>Projelerimiz</p>
+                    <a href="/Admin/Project/Index" class="d-flex align-items-center gap-3 py-2">
+                        <i class="bi bi-briefcase fs-5"></i>
+                        <p class="mb-0">Projeler</p>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="/Admin/About/Index">
-                        <i class="bi bi-info-circle"></i>
-                        <p>Hakkımızda</p>
+                    <a href="/Admin/About/Index" class="d-flex align-items-center gap-3 py-2">
+                        <i class="bi bi-info-circle fs-5"></i>
+                        <p class="mb-0">Kurumsal</p>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="/Admin/Banner/Index">
-                        <i class="bi bi-stars"></i>
-                        <p>Öne Çıkanlar</p>
+                    <a href="/Admin/Banner/Index" class="d-flex align-items-center gap-3 py-2">
+                        <i class="bi bi-stars fs-5"></i>
+                        <p class="mb-0">Öne Çıkanlar</p>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="/Admin/Choose/Index">
-                        <i class="bi bi-patch-check"></i>
-                        <p>Neden Bizi Seçmelisiniz</p>
+                    <a href="/Admin/Feature/Index" class="d-flex align-items-center gap-3 py-2">
+                        <i class="bi bi-star fs-5"></i>
+                        <p class="mb-0">Özellikler</p>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="/Admin/Contact/Index">
-                        <i class="bi bi-envelope"></i>
-                        <p>İletişim</p>
+                    <a href="/Admin/Choose/Index" class="d-flex align-items-center gap-3 py-2">
+                        <i class="bi bi-patch-check fs-5"></i>
+                        <p class="mb-0">Avantajlarımız</p>
+                    </a>
+                </li>
+
+                <li class="nav-section mt-3 mb-2">
+                    <span class="sidebar-mini-icon">
+                        <i class="fa fa-ellipsis-h"></i>
+                    </span>
+                    <h4 class="text-section text-uppercase fw-bold" style="letter-spacing: 1px; font-size: 11px;">Müşteri & İletişim</h4>
+                </li>
+
+                <li class="nav-item">
+                    <a href="/Admin/Appointment/Index" class="d-flex align-items-center gap-3 py-2">
+                        <i class="bi bi-calendar-check fs-5"></i>
+                        <p class="mb-0">Randevu Yönetimi</p>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="/Admin/Feature/Index">
-                        <i class="bi bi-star"></i>
-                        <p>Özelliklerimiz</p>
+                    <a href="/Admin/Contact/Index" class="d-flex align-items-center gap-3 py-2">
+                        <i class="bi bi-envelope fs-5"></i>
+                        <p class="mb-0">İletişim Yönetimi</p>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="/Admin/Appointment/Index">
-                        <i class="bi bi-calendar-check"></i>
-                        <p>Randevular</p>
+                    <a href="/Admin/Testimonial/Index" class="d-flex align-items-center gap-3 py-2">
+                        <i class="bi bi-chat-quote fs-5"></i>
+                        <p class="mb-0">Müşteri Yorumları</p>
                     </a>
                 </li>
 
-
-                <li class="nav-item">
-                    <a href="/Admin/User/Index">
-                        <i class="bi bi-people"></i>
-                        <p>Sisteme Kayıtlı Kullanıcılar</p>
-                    </a>
+                <li class="nav-section mt-3 mb-2">
+                    <span class="sidebar-mini-icon">
+                        <i class="fa fa-ellipsis-h"></i>
+                    </span>
+                    <h4 class="text-section text-uppercase fw-bold" style="letter-spacing: 1px; font-size: 11px;">Erişim & Ekip</h4>
                 </li>
 
                 <li class="nav-item">
-                    <a href="/Admin/Team/Index">
-                        <i class="bi bi-person-vcard"></i> <p>Takımımız</p>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="/Admin/TeamSocial/Index">
-                        <i class="bi bi-share"></i> <p>Takımımızın Sosyal Medya Hesapları</p>
+                    <a href="/Admin/User/Index" class="d-flex align-items-center gap-3 py-2">
+                        <i class="bi bi-people fs-5"></i>
+                        <p class="mb-0">Kullanıcı Yönetimi</p>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="/Admin/Testimonial/Index">
-                        <i class="bi bi-chat-quote"></i> <p>Yorumlarımız</p>
+                    <a href="/Admin/Team/Index" class="d-flex align-items-center gap-3 py-2">
+                        <i class="bi bi-person-vcard fs-5"></i>
+                        <p class="mb-0">Ekibimiz</p>
                     </a>
                 </li>
-             
+
+                <li class="nav-item">
+                    <a href="/Admin/TeamSocial/Index" class="d-flex align-items-center gap-3 py-2">
+                        <i class="bi bi-share fs-5"></i>
+                        <p class="mb-0">Ekip Sosyal Medya</p>
+                    </a>
+                </li>
+
             </ul>
         </div>
     </div>
 </div>
-<!-- End Sidebar -->
