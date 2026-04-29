@@ -132,10 +132,162 @@ Projede alınan her teknik karar, profesyonel bir yazılımın ihtiyaçlarına c
 | **Yetkilendirme (Zero-Trust)** | **JWT & ASP.NET Identity** | Stateless mimari. Oturumlar sunucuda tutulmaz, şifreli JWT token'lar ve özelleştirilmiş (CustomErrorDescriber) Identity yapısıyla yönetilir. |
 | **İletişim & Bildirim** | **Gmail SMTP** | Randevu talepleri admin tarafından onaylandığı veya reddedildiği an, asenkron olarak kullanıcıya kurumsal bilgilendirme e-postası fırlatılır. |
 | **Veri Doğrulama** | **FluentValidation** | İş kuralları ve validasyonlar entity içinden ayrıştırılıp, `IValidator` arayüzleriyle tamamen izole bir katmanda yönetilir. |
+---
 
-## 📊 Ekran Görüntüleri
+## 📊 Ekran Görüntüleri ve Proje Akışları
 
-*(Projenin ekran görüntülerini veya GIF'lerini buraya ekleyebilirsiniz)*
+### 🎓 Eğitim ve Başarı
+<details>
+<summary><b>Sertifikayı Görmek İçin Tıklayın</b></summary>
+<br>
+> Projenin temelini oluşturan eğitim sürecinin tamamlandığına dair sertifika.
+
+<img width="100%" alt="Kurs Sertifikası" src="https://github.com/user-attachments/assets/b1694964-7856-4b12-b00b-6b8add409cf9" />
+</details>
+
+---
+
+### 🏠 Kullanıcı Arayüzü (WebUI) - Ana Sayfa
+<details>
+<summary><b>Ana Sayfa Görsellerini Görmek İçin Tıklayın</b></summary>
+<br>
+> Ziyaretçileri karşılayan modern, dinamik ve kurumsal slider yapısına sahip ana sayfa vitrini.
+
+<img width="100%" alt="Ana Sayfa 1" src="https://github.com/user-attachments/assets/c7c289f5-ffc1-4969-86e7-c30be41fac31" />
+<img width="100%" alt="Ana Sayfa 2" src="https://github.com/user-attachments/assets/edbdfdca-6f01-49e9-9248-4c4cfc387214" />
+<img width="100%" alt="Ana Sayfa 3" src="https://github.com/user-attachments/assets/843cd7a6-ec0c-4d56-aa79-d4486f9c8433" />
+<img width="100%" alt="Ana Sayfa 4" src="https://github.com/user-attachments/assets/daad6610-8d9d-41ee-9df5-40dc588a3726" />
+<img width="100%" alt="Ana Sayfa 5" src="https://github.com/user-attachments/assets/407328e4-5609-4d5b-9b70-ee186499f993" />
+<img width="100%" alt="Ana Sayfa Footer" src="https://github.com/user-attachments/assets/aa677552-347a-493c-b37e-dbaae0ae6c8d" />
+</details>
+
+---
+
+### 📂 Proje Portföyü ve Filtreleme
+<details>
+<summary><b>Filtreleme Görsellerini Görmek İçin Tıklayın</b></summary>
+<br>
+> Tamamlanan projelerin kategorilerine göre (Villalar, Ticari vb.) dinamik olarak filtrelenip listelendiği bölüm.
+
+<img width="100%" alt="Kategori Filtreleme 1" src="https://github.com/user-attachments/assets/c663697c-5047-45a8-bcec-080d37905d6f" />
+<img width="100%" alt="Kategori Filtreleme 2" src="https://github.com/user-attachments/assets/edc483e7-8561-4207-9e32-0c378745dec7" />
+<img width="100%" alt="Kategori Filtreleme 3" src="https://github.com/user-attachments/assets/83abe0c2-1fba-4850-b273-aa5d0e42f6b3" />
+<img width="100%" alt="Kategori Filtreleme 4" src="https://github.com/user-attachments/assets/c2807375-86d5-48e7-90ba-569722de23eb" />
+<img width="100%" alt="Kategori Filtreleme 5" src="https://github.com/user-attachments/assets/5e201acd-9e13-4440-bdc8-49c19ce8345a" />
+</details>
+
+---
+
+### 📅 Randevu Yönetim Sistemi ve Gmail Entegrasyonu
+<details>
+<summary><b>Randevu Süreci ve Mail Bildirimlerini Görmek İçin Tıklayın</b></summary>
+<br>
+> Kullanıcının randevu talep etme süreci ve bu talebin onay/red durumunun Gmail SMTP üzerinden kullanıcıya anlık bildirilmesi akışı.
+
+<img width="100%" alt="Randevu Alma Formu" src="https://github.com/user-attachments/assets/bd8807fc-f148-401d-b0c1-0ad0b9d81796" />
+<img width="100%" alt="Randevu Takvimi Seçimi" src="https://github.com/user-attachments/assets/1fd540fc-d173-456b-a270-eb251b468b7c" />
+<img width="100%" alt="Randevu Detayları" src="https://github.com/user-attachments/assets/bbf053d7-9c29-4a6c-97c0-72ba0800bd4c" />
+<img width="100%" alt="Randevu Başarılı" src="https://github.com/user-attachments/assets/5b10ef8a-e4b5-471e-afb6-2481f9ac73a5" />
+<img width="100%" alt="Admin Randevu Paneli" src="https://github.com/user-attachments/assets/64a01bb9-4052-479b-af6b-6d8b16cdde0a" />
+
+> **✉️ Gmail SMTP Bildirimi:** Admin onayından sonra kullanıcıya giden e-posta örneği.
+<img width="100%" alt="Gmail Bildirim Örneği" src="https://github.com/user-attachments/assets/2c98b867-1abd-4b4a-98eb-93772f53f64b" />
+</details>
+
+---
+
+### 🤖 Gemini AI - Akıllı Fizibilite ve Parsel Sorgulama
+<details>
+<summary><b>Yapay Zeka Analiz Ekranlarını ve PDF Çıktısını Görmek İçin Tıklayın</b></summary>
+<br>
+> Projenin en inovatif kısmı: Kullanıcının haritadan konum seçip isteklerini belirttiği, Gemini Pro'nun ise inşaat maliyeti, deprem riski ve imar durumunu analiz ettiği süreç.
+
+<img width="100%" alt="AI Konum Seçimi" src="https://github.com/user-attachments/assets/56939340-ec00-46cf-be48-c644126df1a7" />
+<img width="100%" alt="AI İstek Girişi" src="https://github.com/user-attachments/assets/86db697c-a01b-4935-ab84-3c790ba08bea" />
+<img width="100%" alt="AI Analiz Süreci 1" src="https://github.com/user-attachments/assets/295e501d-4f06-432f-8b5d-b9689b13a62c" />
+<img width="100%" alt="AI Analiz Süreci 2" src="https://github.com/user-attachments/assets/fed6350b-3fb6-4396-8941-d0cbaeacfcf6" />
+<img width="100%" alt="AI Sonuç Ekranı 1" src="https://github.com/user-attachments/assets/31d363c0-1d95-498d-8ccf-0959878a53b0" />
+<img width="100%" alt="AI Sonuç Ekranı 2" src="https://github.com/user-attachments/assets/c13109ce-1df1-437b-8d24-e2b864d624a4" />
+
+> **📄 Oluşturulan PDF Raporu:** Yapay zeka analizinin indirilebilir PDF çıktısı.
+<img width="100%" alt="AI PDF Çıktısı Önizleme" src="https://github.com/user-attachments/assets/164b3ef6-fd4f-4516-9720-6589a4d17496" />
+
+📖 **[Örnek Yapay Zeka Fizibilite Raporunu (PDF) İndirin](https://github.com/user-attachments/files/27203903/Arkitektur_Fizibilite_Raporu.1.pdf)**
+</details>
+
+---
+
+### 🔑 Kimlik Doğrulama (Identity & JWT)
+<details>
+<summary><b>Kayıt Ol ve Giriş Yap Ekranlarını Görmek İçin Tıklayın</b></summary>
+<br>
+> Güvenli kayıt olma, giriş yapma ve yetkilendirme süreçleri.
+
+**📝 Kayıt Ol Ekranı**
+<img width="100%" alt="Kayıt Ol 1" src="https://github.com/user-attachments/assets/dda60ec5-8aff-41d4-90fd-a73dffe87515" />
+<img width="100%" alt="Kayıt Ol 2" src="https://github.com/user-attachments/assets/679950fc-d734-4380-88fc-77c231be88f6" />
+<img width="100%" alt="Kayıt Ol 3" src="https://github.com/user-attachments/assets/18ce0202-8161-4495-9ce4-b7d3222febf6" />
+<img width="100%" alt="Kayıt Ol 4" src="https://github.com/user-attachments/assets/24bd7503-459c-4779-bdc9-1d98d187432e" />
+
+**🔓 Giriş Yap Ekranı**
+<img width="100%" alt="Giriş Yap 1" src="https://github.com/user-attachments/assets/62e5ffad-20e9-41a1-9674-19d60691abac" />
+<img width="100%" alt="Giriş Yap 2" src="https://github.com/user-attachments/assets/aef01f31-21db-43c5-88f0-8475d4bae12f" />
+</details>
+
+---
+
+### 🛠️ Admin Yönetim Paneli
+<details>
+<summary><b>Admin Paneli Görsellerini Görmek İçin Tıklayın</b></summary>
+<br>
+> Sistem içerisindeki tüm dinamik verilerin (Projeler, Randevular, Ekip, Mesajlar vb.) yönetildiği kapsamlı kontrol paneli.
+
+<img width="100%" alt="Admin Panel Dashboard" src="https://github.com/user-attachments/assets/222f71dd-2fee-4f81-8f44-3de03e286b0b" />
+<img width="100%" alt="Admin Proje Yönetimi 1" src="https://github.com/user-attachments/assets/e0f3300f-cc04-417e-adde-ce3916c6917d" />
+<img width="100%" alt="Admin Proje Yönetimi 2" src="https://github.com/user-attachments/assets/0de5178a-c84a-4700-a6f7-74375b0585c8" />
+<img width="100%" alt="Admin Kategori Yönetimi" src="https://github.com/user-attachments/assets/8c8750a0-ce82-467d-af80-9b4a7510bfc9" />
+<img width="100%" alt="Admin Randevu Yönetimi" src="https://github.com/user-attachments/assets/1bedaa23-2d95-4d99-a009-189343d34f47" />
+<img width="100%" alt="Admin Ekip Yönetimi 1" src="https://github.com/user-attachments/assets/7225a934-bdfa-47bb-a8b8-148c189014b0" />
+<img width="100%" alt="Admin Ekip Yönetimi 2" src="https://github.com/user-attachments/assets/88802646-3d4e-4d65-9dc2-8a11ba710371" />
+<img width="100%" alt="Admin Ekip Yönetimi 3" src="https://github.com/user-attachments/assets/8011ac72-f8d3-4e84-ad8d-3f666e5e80f5" />
+<img width="100%" alt="Admin Referans Yönetimi" src="https://github.com/user-attachments/assets/c145ae95-fee7-4df7-a916-46f7dcec7eb9" />
+<img width="100%" alt="Admin Mesaj Yönetimi 1" src="https://github.com/user-attachments/assets/b634681a-5545-41dc-801a-912cd433c61b" />
+<img width="100%" alt="Admin Mesaj Yönetimi 2" src="https://github.com/user-attachments/assets/9495b8c4-0b83-4650-b8f7-c913d2736dd2" />
+<img width="100%" alt="Admin Ayarlar 1" src="https://github.com/user-attachments/assets/23937d62-d11b-4052-8248-d7db9c3dfb9b" />
+<img width="100%" alt="Admin Ayarlar 2" src="https://github.com/user-attachments/assets/df3bdb37-105d-44c5-9f2e-cd2ac6b1b76c" />
+<img width="100%" alt="Admin Ayarlar 3" src="https://github.com/user-attachments/assets/ad29e332-fb81-4501-bc99-bdbe656dcf8d" />
+<img width="100%" alt="Admin Profil 1" src="https://github.com/user-attachments/assets/5b585516-ebfd-4a37-9143-31529f788c82" />
+<img width="100%" alt="Admin Profil 2" src="https://github.com/user-attachments/assets/b5db356d-2fcd-441f-a63a-4af61c429441" />
+<img width="100%" alt="Admin Profil 3" src="https://github.com/user-attachments/assets/3c2da66c-96c7-40ff-a267-3efd259f5d6b" />
+<img width="100%" alt="Admin Login" src="https://github.com/user-attachments/assets/32f33ed3-d6e1-4033-a843-68689756858f" />
+</details>
+
+---
+
+### 📡 API Dokümantasyonu (Scalar)
+<details>
+<summary><b>API Arayüzünü Görmek İçin Tıklayın</b></summary>
+<br>
+> Projenin API katmanının Scalar (Swagger alternatifi) üzerinden dokümante edilmiş hali.
+
+<img width="100%" alt="API Scalar Dokümantasyonu" src="https://github.com/user-attachments/assets/eb125d5f-edc3-478d-bb71-bb51ba98ac30" />
+</details>
+
+---
+
+### 🏗️ Solution ve Katman Yapısı
+<details>
+<summary><b>Mimari Katman Dosyalarını Görmek İçin Tıklayın</b></summary>
+<br>
+> Projenin N-Katmanlı Mimari (N-Layer Architecture) prensiplerine göre fiziksel klasörlenmesi.
+
+<img width="100%" alt="Solution Yapısı Genel" src="https://github.com/user-attachments/assets/7fee45ed-e0ce-41b3-a956-47280e5ff669" />
+<img width="100%" alt="DataAccess Katmanı" src="https://github.com/user-attachments/assets/66d47348-6fed-4abf-b15c-7df58087d728" />
+<img width="100%" alt="Business Katmanı" src="https://github.com/user-attachments/assets/b96da80b-ba3a-48ec-be58-6051c6011f1f" />
+<img width="100%" alt="API Katmanı" src="https://github.com/user-attachments/assets/4c545519-acd8-4ea2-a054-44b0820371b0" />
+<img width="100%" alt="WebUI Katmanı" src="https://github.com/user-attachments/assets/30631e11-aa5c-4817-a9be-3f4695122ee1" />
+</details>
+
 
 ## ⚙️ Kurulum
 
