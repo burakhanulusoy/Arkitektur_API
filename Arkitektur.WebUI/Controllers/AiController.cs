@@ -47,8 +47,9 @@ namespace Arkitektur.WebUI.Controllers
                 return View("Index");
             }
 
-            // 3. YENİ GELİŞMİŞ YAPAY ZEKA PROMPT'U (Tam Konum Eklendi)
-            string prompt = $@"Sen Arkitektur isimli mimarlık ve gayrimenkul danışmanlık şirketinin profesyonel Baş Mimarı ve İnşaat Mühendisisin.
+            // 3. ENJEKTE EDİLMİŞ YENİ YAPAY ZEKA PROMPT'U (Deprem, Zemin, Çevre ve Karar Eklendi)
+            // 3. ENJEKTE EDİLMİŞ YENİ YAPAY ZEKA PROMPT'U
+            string prompt = $@"Sen Arkitektur isimli mimarlık ve gayrimenkul danışmanlık şirketinin profesyonel Baş Mimarı, İnşaat Mühendisi ve Şehir Plancısısın.
 Müşterinin haritadan seçtiği arazinin bilgileri şunlar:
 - Şehir: {request.City}
 - Tam Konum / Adres: {request.FullAddress}
@@ -57,21 +58,18 @@ Müşterinin haritadan seçtiği arazinin bilgileri şunlar:
 
 Lütfen bu boş arazi için son derece resmi, kurumsal ve profesyonel bir rapor hazırla.
 
-ÖNEMLİ KURAL: Yanıtında KESİNLİKLE kalın yazı için '**', '*', başlıklar için '#' gibi Markdown işaretleri KULLANMA! Sadece temiz, paragraflara ayrılmış düz metin formatında yaz. 
+ÖNEMLİ KURALLAR: 
+1. Yanıtında KESİNLİKLE kalın yazı için '**', '*', başlıklar için '#' gibi Markdown işaretleri KULLANMA! Sadece temiz düz metin kullan.
+2. Rapora doğrudan 'Sayın Müşterimiz,' diyerek başla ve boşluk bırakarak paragraflara geç.
+3. Raporun girişinde KESİNLİKLE 'Sen Arkitektur olarak' gibi ifadeler KULLANMA! Bunun yerine 'Biz Arkitektur Mimarlık olarak' diyerek profesyonel ve kurumsal bir dil kullan.
 
 Raporda şu bölümler alt alta, net bir Türkçeyle yer alsın:
-1. Şehir, Konum ve Coğrafi Analiz: ({request.FullAddress} konumunun çevresel özellikleri, altyapı potansiyeli ve zemin yapısı hakkında bilgi ver. Boş arazinin potansiyelinden bahset.)
-2. İmar Durumu ve İnşaat İzni: (Bu tam adresteki boş arazi için tahmini bir imar senaryosu üret. Tarım arazisi riski varsa kısıtlamaları açıkla.)
-3. {request.City} Bölgesine Özel Maliyet Tahmini: (Sadece {request.City} ilindeki güncel piyasa ortalamalarını baz alarak tahmini birim maliyetleri çıkar ve liste yap:
-   - Hazır Beton (m3)
-   - İnşaat Demiri (Ton)
-   - Tuğla / Bims
-   - Zemin Kaplama / Parke (m2)
-   - Fayans / Seramik (m2)
-   - Dış ve İç Cephe Boya Malzemeleri
-   Ardından projenin toplam tahmini bütçe aralığını belirt.)
-4. Mimari Tavsiye: (Arazinin boş durumu, iklimi ve müşterinin hayaline en uygun yalıtım, temel tipi ve tasarruf sağlayacak yapı malzemesi tavsiyelerini ver.)";
 
+1. Konum ve Sosyal Çevre Analizi: ({request.FullAddress} koordinatlarına göre buranın şehir merkezi mi, gelişmekte olan bir banliyö mü yoksa köy/kırsal mı olduğunu analiz et. Çevredeki market, hastane ve ulaşım ağlarını değerlendir.)
+2. Zemin, Toprak Yapısı ve Deprem Riski: (Toprak yapısı inşaata uygun mu? Bölge AFAD verilerine göre kaçıncı derece deprem bölgesinde yer alıyor? Depreme karşı ne tür bir temel gerekir açıkla.)
+3. İmar Durumu ve İnşaat İzni: (Bu adres için tahmini bir imar senaryosu üret ve kısıtlamaları açıkla.)
+4. Bölgeye Özel Maliyet Tahmini: (Sadece {request.City} ilindeki güncel piyasa ortalamalarını baz alarak tahmini maliyetleri çıkar ve toplam bütçe aralığını belirt.)
+5. Nihai Karar ve Mimari Tavsiye: (Tüm analizleri göz önünde bulundurarak Raporun en sonunda büyük harflerle 'SONUÇ OLARAK BU BÖLGEYE YENİ BİR EV YAPMAK MANTIKLIDIR' veya '...MANTIKSIZDIR' şeklinde kesin bir hüküm bildir.)";
             var endpoint = $"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent?key={apiKey}";
 
             var requestBody = new
@@ -117,8 +115,6 @@ Raporda şu bölümler alt alta, net bir Türkçeyle yer alsın:
         // --- ARAZİ DOLULUK SİMÜLASYONU (Mock) ---
         private bool CheckIfLandOccupiedMock(double latitude, double longitude)
         {
-            // Kullanıcıyı sürekli hata ile boğmamak için doluluk ihtimalini %5'e düşürdük.
-            // Sadece test amaçlıdır, ileride gerçek API ile değiştirilecek.
             int randomCheck = new Random().Next(1, 101);
             if (randomCheck <= 5)
             {
@@ -132,7 +128,7 @@ Raporda şu bölümler alt alta, net bir Türkçeyle yer alsın:
     public class AiRequestDto
     {
         public string City { get; set; }
-        public string FullAddress { get; set; } // YENİ EKLENEN TAM ADRES
+        public string FullAddress { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
         public string HouseDescription { get; set; }

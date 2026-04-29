@@ -13,6 +13,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
     <style>
         body {
             font-family: 'Montserrat', sans-serif;
@@ -30,17 +32,18 @@
 
         .report-header {
             background: #111;
-            color: #d4af37; /* Altın/Hardal rengi */
+            color: #d4af37;
             padding: 2rem 3rem;
             border-bottom: 5px solid #d4af37;
         }
 
         .report-content {
-            font-family: 'Merriweather', serif; /* Rapor okumayı kolaylaştıran tırnaklı font */
+            font-family: 'Merriweather', serif;
             color: #333;
             font-size: 1.1rem;
             line-height: 1.9;
             white-space: pre-wrap;
+            text-align: left; /* Yazıları sola yasladık */
         }
 
         .btn-outline-custom {
@@ -54,6 +57,19 @@
                 background: #111;
                 color: #d4af37;
             }
+
+        .btn-pdf {
+            background-color: #d4af37;
+            color: #111;
+            border: none;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+            .btn-pdf:hover {
+                background-color: #b5952f;
+                transform: translateY(-2px);
+            }
     </style>
 </head>
 <body>
@@ -61,7 +77,17 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-10">
-                <div class="report-card">
+
+                <div class="d-flex justify-content-end mb-3 gap-2">
+                    <a asp-controller="Ai" asp-action="Index" class="btn btn-light fw-bold shadow-sm">
+                        🔍 Yeni Sorgulama
+                    </a>
+                    <button onclick="downloadPDF()" class="btn btn-pdf fw-bold shadow-sm px-4">
+                        📄 PDF Olarak İndir
+                    </button>
+                </div>
+
+                <div class="report-card" id="pdfContent">
 
                     <div class="report-header d-flex justify-content-between align-items-center flex-wrap gap-3">
                         <div>
@@ -69,31 +95,45 @@
                             <small class="text-white-50">Resmi Fizibilite ve Maliyet Analizi</small>
                         </div>
                         <span class="badge bg-success fs-6 px-3 py-2 text-white border border-light rounded-pill">
-                            Onaylı Analiz
+                            Onaylı Rapor
                         </span>
                     </div>
 
                     <div class="card-body p-4 p-md-5">
-
-                        <div class="report-content mb-5">
+                        <div class="report-content text-start">
                             @ViewBag.AiResult
                         </div>
 
-                        <hr class="my-5" style="border-top: 2px dashed #ccc;" />
-
-                        <div class="text-center bg-light p-5 rounded-4">
-                            <h5 class="fw-bold mb-3">Yeni Bir Proje mi Düşünüyorsunuz?</h5>
-                            <p class="text-muted mb-4">Başka bir gayrimenkul veya arsa için yeniden detaylı fizibilite raporu oluşturabilirsiniz.</p>
-                            <a asp-controller="Ai" asp-action="Index" class="btn btn-outline-custom btn-lg px-5 fw-bold text-uppercase" style="letter-spacing: 1px;">
-                                YENİ SORGULAMA YAP
-                            </a>
+                        <div class="mt-5 text-end text-muted" style="font-size: 0.85rem; font-family: 'Montserrat', sans-serif;">
+                            <p class="mb-0">Bu rapor Arkitektur AI tarafından üretilmiştir.</p>
+                            <p>Tarih: @DateTime.Now.ToString("dd.MM.yyyy HH:mm")</p>
                         </div>
-
                     </div>
+
                 </div>
+
             </div>
         </div>
     </div>
+
+    <script>
+        function downloadPDF() {
+            // PDF yapılacak HTML div'ini seç
+            var element = document.getElementById('pdfContent');
+
+            // PDF Ayarları
+            var opt = {
+                margin:       [10, 0, 10, 0], // Üst, Sağ, Alt, Sol kenar boşlukları
+                filename:     'Arkitektur_Fizibilite_Raporu.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            // Kütüphaneyi çağır ve indir
+            html2pdf().set(opt).from(element).save();
+        }
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
