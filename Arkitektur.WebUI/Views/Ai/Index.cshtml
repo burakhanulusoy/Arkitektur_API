@@ -1,91 +1,210 @@
 ﻿@{
-    ViewData["Title"] = "Uhud AI - Hayalden Render'a";
-    // Layout dosyanın yolunu kendi projene göre düzenleyebilirsin
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "AI Haritalı İmar Analisti";
+    Layout = null;
 }
 
-<div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s">
-    <div class="container py-5">
-        <h1 class="display-1 text-white animated slideInDown">Uhud AI Mimar</h1>
-    </div>
-</div>
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Arkitektur</title>
 
-<div class="container-xxl py-5">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #1f1f1f 0%, #0a0a0a 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 3rem 0;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            overflow: hidden;
+        }
+
+        .card-header-custom {
+            background: #111;
+            color: #fff;
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 4px solid #d4af37;
+        }
+        /* Harita Alanı Tasarımı */
+        #map {
+            height: 450px;
+            width: 100%;
+            border-radius: 10px;
+            border: 2px solid #333;
+            margin-bottom: 15px;
+            cursor: crosshair;
+        }
+
+        .form-control {
+            border-radius: 10px;
+            background-color: #f8f9fa;
+        }
+
+            .form-control:focus {
+                border-color: #d4af37;
+                box-shadow: 0 0 0 0.25rem rgba(212, 175, 55, 0.25);
+            }
+
+        .btn-custom {
+            background-color: #111;
+            color: #d4af37;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+            .btn-custom:hover {
+                background-color: #d4af37;
+                color: #111;
+                transform: translateY(-2px);
+            }
+
+        .selected-info {
+            background: #222;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            color: #fff;
+            display: none;
+            border-left: 5px solid #d4af37;
+        }
+    </style>
+</head>
+<body>
+
     <div class="container">
-        <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
-            <h4 class="section-title">Yapay Zeka Tasarım</h4>
-            <h1 class="display-5 mb-4">Arsanızı Yükleyin, Hayalinizi Anlatın</h1>
-        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-10 col-md-12">
+                <div class="glass-card">
+                    <div class="card-header-custom">
+                        <h2 class="mb-1 fw-light">
+                            Arkitektur <span class="fw-bold">AI Harita Analizi</span>
+                        </h2>
+                        <p class="text-light opacity-75 mb-0" style="letter-spacing: 2px; font-size: 0.9rem;">UYDU DESTEKLİ İNTERAKTİF LOKASYON HESAPLAMA</p>
+                    </div>
+                    <div class="card-body p-4 p-md-5">
 
-        <div class="row g-5">
-            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
-                <div class="bg-light p-5 h-100 d-flex flex-column justify-content-center">
-
-                    @if (ViewBag.Error != null)
-                    {
-                        <div class="alert alert-danger">@ViewBag.Error</div>
-                    }
-
-                    <form method="post" enctype="multipart/form-data" asp-controller="Ai" asp-action="Index" id="aiForm">
-                        <div class="row g-3">
-                            <div class="col-12">
-                                <label class="form-label fw-bold">Arsa / Arazi Fotoğrafı</label>
-                                <input type="file" name="plotImage" class="form-control bg-white" style="height: 55px;" accept="image/*" required>
+                        @if (ViewBag.Error != null)
+                        {
+                            <div class="alert alert-danger border-0 shadow-sm rounded-3 fw-bold" role="alert">
+                                ⚠️ @ViewBag.Error
                             </div>
-                            <div class="col-12">
-                                <label class="form-label fw-bold">Nasıl Bir Yapı İstiyorsunuz?</label>
-                                <textarea name="userPrompt" class="form-control bg-white" rows="5" placeholder="Örn: 2 katlı, geniş pencereli, ahşap detaylı modern bir İskandinav villası..." required></textarea>
+                        }
+
+                        <p class="text-muted mb-4 text-center" style="font-size: 1.05rem;">
+                            Uydu haritası üzerinden analiz yapmak istediğiniz <strong>boş araziye</strong> tıklayın ve hayalinizdeki evi tarif edin.
+                        </p>
+
+                        <form asp-controller="Ai" asp-action="Analyze" method="post" id="aiForm">
+
+                            <input type="hidden" id="City" name="City" />
+                            <input type="hidden" id="FullAddress" name="FullAddress" />
+                            <input type="hidden" id="Latitude" name="Latitude" />
+                            <input type="hidden" id="Longitude" name="Longitude" />
+
+                            <div class="mb-4">
+                                <label class="form-label fw-bold text-dark">1. Arazi Seçimi (Uydu Haritasına Tıklayın)</label>
+
+                                <div id="map"></div>
+
+                                <div id="selectedInfo" class="selected-info mt-3 shadow-sm">
+                                    <strong class="text-warning">📍 Konum Tespit Edildi:</strong> <br />
+                                    <span id="cityNameDisplay" class="text-light">Bekleniyor...</span>
+                                </div>
                             </div>
-                            <div class="col-12 mt-4">
-                                <button class="btn btn-primary w-100 py-3" type="submit" id="submitBtn">
-                                    <span id="btnText">Yapay Zeka İle Tasarla</span>
-                                    <span id="btnSpinner" class="spinner-border spinner-border-sm d-none ms-2" role="status" aria-hidden="true"></span>
+
+                            <div class="mb-5 mt-4">
+                                <label for="HouseDescription" class="form-label fw-bold text-dark">2. Hayalinizdeki Yapı Özellikleri</label>
+                                <textarea class="form-control" id="HouseDescription" name="HouseDescription" rows="4" placeholder="Örn: 2 katlı, Amerikan mutfaklı, taş dış cephe kaplamalı şık bir villa..." required></textarea>
+                            </div>
+
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-custom btn-lg py-3 fw-bold shadow" id="submitBtn">
+                                    ARAZİYİ VE MALİYETİ ANALİZ ET
                                 </button>
                             </div>
-                        </div>
-                    </form>
+
+                        </form>
+                    </div>
                 </div>
-            </div>
-
-            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
-
-                @if (ViewBag.GeneratedImageUrl != null)
-                {
-                    <div class="card border-0 shadow h-100">
-                        <img src="@ViewBag.GeneratedImageUrl" class="card-img-top" alt="Uhud AI Generated Architecture" style="object-fit: cover; max-height: 450px;">
-                        <div class="card-body p-4 bg-light">
-                            <h5 class="card-title text-primary mb-3">Uhud AI Render Sonucu</h5>
-                            <p class="card-text fw-bold mb-1">Gemini 3.1 Pro Arazi Analizi:</p>
-                            <p class="card-text text-muted fst-italic small">@ViewBag.Analysis</p>
-                            <a href="@ViewBag.GeneratedImageUrl" target="_blank" class="btn btn-outline-primary mt-3 w-100">Görseli Tam Boyutta İncele</a>
-                        </div>
-                    </div>
-                }
-                else
-                {
-                    <div class="h-100 d-flex align-items-center justify-content-center bg-light" style="min-height: 450px; border: 2px dashed #adb5bd;">
-                        <div class="text-center text-muted p-4">
-                            <i class="fa fa-image fa-4x mb-3 text-secondary"></i>
-                            <h5 class="text-secondary">Sonuç Burada Görüntülenecek</h5>
-                            <p class="mb-0">Tasarımınız hazır olduğunda bu alanda belirecektir.<br><small>(İşlem yoğunluğa bağlı olarak 15-30 saniye sürebilir)</small></p>
-                        </div>
-                    </div>
-                }
-
             </div>
         </div>
     </div>
-</div>
 
-<script>
-    document.getElementById('aiForm').addEventListener('submit', function () {
-        var btnText = document.getElementById('btnText');
-        var btnSpinner = document.getElementById('btnSpinner');
-        var submitBtn = document.getElementById('submitBtn');
+    <script>
+        // 1. Haritayı Başlat (Başlangıç noktası olarak zoom seviyesini 13 yaptık, daha yakından açılacak)
+        var map = L.map('map').setView([39.4200, 29.9860], 13);
 
-        // Metni değiştir, spineri göster, butonu kilitle ki adam 2 kere basamasın
-        btnText.innerHTML = 'Çizim Yapılıyor (Lütfen Bekleyin)...';
-        btnSpinner.classList.remove('d-none');
-        submitBtn.disabled = true;
-    });
-</script>
+        // 2. PROFESYONEL GOOGLE HYBRID HARİTASI (Uydu + Sokak/İlçe İsimleri + Bina Sınırları)
+        L.tileLayer('http://{s}.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', {
+            maxZoom: 20,
+            subdomains:['mt0','mt1','mt2','mt3'],
+            attribution: '&copy; Google Haritalar & Arkitektur'
+        }).addTo(map);
+
+        var marker;
+
+        // 3. Haritaya Tıklama Olayı (Event)
+        map.on('click', function(e) {
+            var lat = e.latlng.lat;
+            var lng = e.latlng.lng;
+
+            if(marker) {
+                map.removeLayer(marker);
+            }
+            marker = L.marker([lat, lng]).addTo(map);
+
+            document.getElementById('Latitude').value = lat;
+            document.getElementById('Longitude').value = lng;
+
+            document.getElementById('selectedInfo').style.display = 'block';
+            document.getElementById('cityNameDisplay').innerText = "Adres detayları çözümleniyor, lütfen bekleyin...";
+
+            // 4. Koordinattan Tam Adres Bulma
+            var url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    var city = data.address.province || data.address.city || data.address.state || data.address.region || "Bilinmeyen Bölge";
+                    var fullAddress = data.display_name || "Adres detayı bulunamadı";
+
+                    document.getElementById('City').value = city;
+                    document.getElementById('FullAddress').value = fullAddress;
+
+                    document.getElementById('cityNameDisplay').innerText = fullAddress;
+                })
+                .catch(error => {
+                    console.log("Adres çekilirken hata oluştu: ", error);
+                    document.getElementById('cityNameDisplay').innerText = "Konum işaretlendi (Adres sunucusundan yanıt alınamadı)";
+                    document.getElementById('City').value = "Bilinmeyen Bölge";
+                    document.getElementById('FullAddress').value = "Koordinat seçildi, tam adres çözümlenemedi.";
+                });
+        });
+
+        // 5. Form Doğrulama
+        document.getElementById('aiForm').addEventListener('submit', function(e) {
+            var lat = document.getElementById('Latitude').value;
+            if (!lat || lat === "") {
+                e.preventDefault();
+                alert("Lütfen önce uydu haritası üzerinden analiz yapmak istediğiniz araziye tıklayın!");
+            }
+        });
+    </script>
+
+</body>
+</html>

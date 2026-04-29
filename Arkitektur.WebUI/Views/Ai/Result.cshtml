@@ -1,0 +1,100 @@
+﻿@{
+    ViewData["Title"] = "İmar ve Maliyet Analiz Raporu";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Arkitektur</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #1f1f1f 0%, #0a0a0a 100%);
+            min-height: 100vh;
+            padding: 3rem 0;
+        }
+
+        .report-card {
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            overflow: hidden;
+        }
+
+        .report-header {
+            background: #111;
+            color: #d4af37; /* Altın/Hardal rengi */
+            padding: 2rem 3rem;
+            border-bottom: 5px solid #d4af37;
+        }
+
+        .report-content {
+            font-family: 'Merriweather', serif; /* Rapor okumayı kolaylaştıran tırnaklı font */
+            color: #333;
+            font-size: 1.1rem;
+            line-height: 1.9;
+            white-space: pre-wrap;
+        }
+
+        .btn-outline-custom {
+            border: 2px solid #111;
+            color: #111;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+            .btn-outline-custom:hover {
+                background: #111;
+                color: #d4af37;
+            }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="report-card">
+
+                    <div class="report-header d-flex justify-content-between align-items-center flex-wrap gap-3">
+                        <div>
+                            <h3 class="mb-0 fw-bold text-white">Arkitektur Danışmanlık Raporu</h3>
+                            <small class="text-white-50">Resmi Fizibilite ve Maliyet Analizi</small>
+                        </div>
+                        <span class="badge bg-success fs-6 px-3 py-2 text-white border border-light rounded-pill">
+                            Onaylı Analiz
+                        </span>
+                    </div>
+
+                    <div class="card-body p-4 p-md-5">
+
+                        <div class="report-content mb-5">
+                            @ViewBag.AiResult
+                        </div>
+
+                        <hr class="my-5" style="border-top: 2px dashed #ccc;" />
+
+                        <div class="text-center bg-light p-5 rounded-4">
+                            <h5 class="fw-bold mb-3">Yeni Bir Proje mi Düşünüyorsunuz?</h5>
+                            <p class="text-muted mb-4">Başka bir gayrimenkul veya arsa için yeniden detaylı fizibilite raporu oluşturabilirsiniz.</p>
+                            <a asp-controller="Ai" asp-action="Index" class="btn btn-outline-custom btn-lg px-5 fw-bold text-uppercase" style="letter-spacing: 1px;">
+                                YENİ SORGULAMA YAP
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
